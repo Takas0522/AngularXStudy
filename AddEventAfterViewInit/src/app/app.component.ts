@@ -16,9 +16,14 @@ export class AppComponent {
   private eventTwoFunc: Function;
 
   addEventOne() {
-    this.eventOneFunc = this._renderer.listen(this._elementRef.nativeElement.querySelector(this.targetId), "click", (event) => {
-      this.showOneMessage();
-    });
+    this.eventOneFunc =
+      this._renderer.listen(
+        this._elementRef.nativeElement.querySelector(this.targetId),
+        'click',
+        (event) => {
+          this.showOneMessage();
+        }
+      );
   }
   removeEventOne() {
     this.eventOneFunc();
@@ -27,9 +32,14 @@ export class AppComponent {
     alert('This is Event One!');
   }
   addEventTwo() {
-    this.eventTwoFunc = this._renderer.listen(this._elementRef.nativeElement.querySelector(this.targetId), "click", (event) => {
-      this.showTwoMessage();
-    });
+    this.eventTwoFunc =
+      this._renderer.listen(
+        this._elementRef.nativeElement.querySelector(this.targetId),
+        'click',
+        (event) => {
+          this.showTwoMessage();
+        }
+      );
   }
   removeEventTwo() {
     this.eventTwoFunc();
