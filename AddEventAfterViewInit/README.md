@@ -1,27 +1,31 @@
-# AddEventAfterViewInit
+## 表示後にHTML要素に対してEventを付け加えるには
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.4.
+RendererでHTML要素に対してEventを追加します。
+HTML要素はComponent内から、ElementRefを使用します。
 
-## Development server
+コンストラクタ
+``` typescript
+constructor(
+    private _elementRef: ElementRef,
+    private _renderer: Renderer
+){}
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+イベントの追加
+``` typescript
+private eventOneFunc: Function;
+this.eventOneFunc = this._renderer.listen(this._elementRef.nativeElement.querySelector(TARGET_HTML_ELEMENT), "click", (event) => {
+    alert("AAA");
+});
+```
 
-## Code scaffolding
+イベントの破棄
+``` typescript
+this.eventOneFunc();
+```
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+* START
+```
+npm i
+npm start
+```
