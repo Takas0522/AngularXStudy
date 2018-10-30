@@ -1,0 +1,13 @@
+<mat-form-field>
+  <mat-select
+    [(value)]="selectDeviceId"
+    (valueChange)="selectionChanged()"
+    placeholder="Select Camera Device">
+    <mat-option *ngFor="let de of devices" [value]="de.deviceId">
+      {{de.label}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<zxing-scanner #scanner
+  [device]="selectDeviceId">
+</zxing-scanner>

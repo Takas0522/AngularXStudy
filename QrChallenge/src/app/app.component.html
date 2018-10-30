@@ -1,0 +1,12 @@
+<mat-toolbar class="mat-elevation-z8" color="primary">
+  <mat-toolbar-row>
+    <span>QrChallenge</span>
+  </mat-toolbar-row>
+</mat-toolbar>
+<div class="router-button">
+  <button mat-raised-button (click)="moveRouter('scanner')">Scanner</button>
+  <button mat-raised-button (click)="moveRouter('generator')">Generator</button>
+</div>
+<div class="content">
+  <router-outlet></router-outlet>
+</div>
