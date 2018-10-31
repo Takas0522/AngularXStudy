@@ -9,6 +9,7 @@ import { QrCodeGeneratorComponent } from './qr-code-generator/qr-code-generator.
 import { BlankComponent } from './blank/blank.component';
 import { MaterialSummaryModule } from './material-summary/material-summary.module';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { NgxKjuaModule } from 'ngx-kjua';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialSummaryModule,
-    ZXingScannerModule
+    ZXingScannerModule,
+    NgxKjuaModule
   ],
   providers: [],
   bootstrap: [AppComponent]
