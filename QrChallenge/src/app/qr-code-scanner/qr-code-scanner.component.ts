@@ -11,22 +11,16 @@ export class QrCodeScannerComponent implements OnInit, OnDestroy {
   @ViewChild('scanner') private scannner: ZXingScannerComponent;
   devices: MediaDeviceInfo[];
   selectDeviceId: string;
-
-  constructor() { }
+  readString: string;
 
   ngOnInit() {
     this.scannner.camerasFound.subscribe((devices: MediaDeviceInfo[]) => {
       this.devices = devices;
       this.devices.unshift({deviceId: '', groupId: null, kind: null, label: 'None'});
-      console.log(this.devices)
     });
     this.scannner.scanSuccess.subscribe(result => {
-      console.log(result);
+      this.readString = result;
     });
-  }
-
-  selectionChanged() {
-    console.log(this.selectDeviceId)
   }
 
   ngOnDestroy() {

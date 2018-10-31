@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { interval } from 'rxjs';
 
 @Component({
   selector: 'app-qr-code-generator',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class QrCodeGeneratorComponent implements OnInit {
 
-  constructor() { }
+  private countInterval = interval(2000);
+  qrString = '';
 
   ngOnInit() {
+    this.countInterval.subscribe(count => {
+      this.qrString = count.toString();
+    });
   }
 
 }
