@@ -1,0 +1,51 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+pool:
+  vmImage: 'Ubuntu 16.04'
+
+steps:
+- task: Npm@1
+  displayName: 'npm install'
+  inputs:
+    verbose: false
+
+- task: Npm@1
+  displayName: 'npm run test'
+  inputs:
+    command: custom
+
+    verbose: false
+
+    customCommand: 'run test'
+
+- task: PublishTestResults@2
+  displayName: 'Publish Test Results'
+  inputs:
+    testResultsFiles: 'junit.xml'
+
+  condition: always()
+
+- task: Npm@1
+  displayName: 'npm build'
+  inputs:
+    command: custom
+
+    verbose: false
+
+    customCommand: 'run prod-build'
+
+- task: ArchiveFiles@2
+  displayName: 'Archive dist\AngularWithJest'
+  inputs:
+    rootFolderOrFile: 'dist\AngularWithJest'
+
+    includeRootFolder: false
+
+    archiveFile: '$(Build.ArtifactStagingDirectory)/drop.zip'
+
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
