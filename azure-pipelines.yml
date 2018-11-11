@@ -1,52 +1,47 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
-pool:
-  vmImage: 'Ubuntu 16.04'
+resources:
+- repo: self
+queue:
+  name: Hosted VS2017
+  demands: npm
 
 steps:
 - task: Npm@1
   displayName: 'npm install'
   inputs:
-    workingDir: 'AngularWithJest'
+    workingDir: AngularWithJest
+
     verbose: false
+
 
 - task: Npm@1
   displayName: 'npm run test'
   inputs:
     command: custom
-    workingDir: 'AngularWithJest'
+
+    workingDir: AngularWithJest
+
     verbose: false
 
-    customCommand: 'run test:ci'
+    customCommand: 'run test'
+
 
 - task: PublishTestResults@2
-  displayName: 'Publish Test Results'
+  displayName: 'Publish Test Results **/junit.xml'
   inputs:
-    testResultsFiles: 'AngularWithJest\junit.xml'
+    testResultsFiles: '**/junit.xml'
 
   condition: always()
 
 - task: Npm@1
   displayName: 'npm build'
   inputs:
-    workingDir: 'AngularWithJest'
     command: custom
+
+    workingDir: AngularWithJest
+
     verbose: false
 
     customCommand: 'run prod-build'
 
-- task: ArchiveFiles@2
-  displayName: 'Archive dist\AngularWithJest'
-  inputs:
-    rootFolderOrFile: 'rootFolderOrFile: AngularWithJest\dist\AngularWithJest'
-
-    includeRootFolder: false
-
-    archiveFile: '$(Build.ArtifactStagingDirectory)/drop.zip'
 
 
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: drop'
