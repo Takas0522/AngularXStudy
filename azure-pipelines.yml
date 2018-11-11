@@ -20,7 +20,7 @@ steps:
     workingDir: 'AngularWithJest'
     verbose: false
 
-    customCommand: 'run test'
+    customCommand: 'run test:ci'
 
 - task: PublishTestResults@2
   displayName: 'Publish Test Results'
