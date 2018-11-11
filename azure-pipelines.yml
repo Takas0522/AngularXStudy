@@ -10,13 +10,14 @@ steps:
 - task: Npm@1
   displayName: 'npm install'
   inputs:
+    rootFolderOrFile: 'AngularWithJest'
     verbose: false
 
 - task: Npm@1
   displayName: 'npm run test'
   inputs:
     command: custom
-
+    rootFolderOrFile: 'AngularWithJest'
     verbose: false
 
     customCommand: 'run test'
@@ -24,6 +25,7 @@ steps:
 - task: PublishTestResults@2
   displayName: 'Publish Test Results'
   inputs:
+    rootFolderOrFile: 'AngularWithJest'
     testResultsFiles: 'junit.xml'
 
   condition: always()
@@ -31,8 +33,8 @@ steps:
 - task: Npm@1
   displayName: 'npm build'
   inputs:
+    rootFolderOrFile: 'AngularWithJest'
     command: custom
-
     verbose: false
 
     customCommand: 'run prod-build'
@@ -40,7 +42,7 @@ steps:
 - task: ArchiveFiles@2
   displayName: 'Archive dist\AngularWithJest'
   inputs:
-    rootFolderOrFile: 'dist\AngularWithJest'
+    rootFolderOrFile: 'rootFolderOrFile: AngularWithJest\dist\AngularWithJest'
 
     includeRootFolder: false
 
