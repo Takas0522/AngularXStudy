@@ -5,9 +5,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "test": "jest",
+    "test": "jest --reporters=default",
     "test:watch": "jest --watch",
-    "test:ci": "jest --ci",
+    "test:ci": "jest --reporters=jest-junit",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "prod-build": "ng build --prod"
@@ -56,6 +56,7 @@
     "preset": "jest-preset-angular",
     "setupTestFrameworkScriptFile": "<rootDir>/src/jest.ts",
     "reporters": [
+      "default",
       "jest-junit"
     ]
   }
