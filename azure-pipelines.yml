@@ -10,14 +10,14 @@ steps:
 - task: Npm@1
   displayName: 'npm install'
   inputs:
-    rootFolderOrFile: 'AngularWithJest'
+    workingDir: 'AngularWithJest'
     verbose: false
 
 - task: Npm@1
   displayName: 'npm run test'
   inputs:
     command: custom
-    rootFolderOrFile: 'AngularWithJest'
+    workingDir: 'AngularWithJest'
     verbose: false
 
     customCommand: 'run test'
@@ -25,15 +25,14 @@ steps:
 - task: PublishTestResults@2
   displayName: 'Publish Test Results'
   inputs:
-    rootFolderOrFile: 'AngularWithJest'
-    testResultsFiles: 'junit.xml'
+    testResultsFiles: 'AngularWithJest\junit.xml'
 
   condition: always()
 
 - task: Npm@1
   displayName: 'npm build'
   inputs:
-    rootFolderOrFile: 'AngularWithJest'
+    workingDir: 'AngularWithJest'
     command: custom
     verbose: false
 
