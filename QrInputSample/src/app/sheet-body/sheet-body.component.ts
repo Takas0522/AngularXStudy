@@ -45,7 +45,7 @@ export class SheetBodyComponent implements OnInit {
 
   constructor(
     private cd: ChangeDetectorRef,
-    @Inject(MAT_BOTTOM_SHEET_DATA) public service: QrInputService
+    public service: QrInputService
   ) { }
 
   ngOnInit() {
