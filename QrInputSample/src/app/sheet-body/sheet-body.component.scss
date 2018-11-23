@@ -1,0 +1,32 @@
+.camera-field {
+    width: 100%;
+    margin: auto;
+}
+.header {
+    padding-left: 16px;
+    margin-top: 20px;
+}
+.selection {
+    width: 100%;
+}
+.header-form {
+    width: 90%;
+    margin: auto;
+}
+.content {
+    // margin-top: 20px;
+    // padding-left: 16px;
+    // padding-right: 16px;
+}
+.zxing-filed {
+    position: relative;
+    width: 100%;
+    margin: auto;
+}
+.roll-icon-button {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: white;
+    z-index: 10000;
+}

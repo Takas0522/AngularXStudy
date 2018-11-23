@@ -1,0 +1,26 @@
+<div class="content">
+    <div [hidden]="!hasCameras" class="zxing-filed">
+        <button class="roll-icon-button" mat-mini-fab color="primary"
+        (click)="selectedCmaeraChanged()">
+            <mat-icon color="white">switch_camera</mat-icon>
+        </button>
+        <zxing-scanner #scanner class="camera-field" start="true"
+            [device]="selectedDeviceId"
+            (scanSuccess)="handleQrCodeResult($event)"
+            [formats]="readingFormatType">
+        </zxing-scanner>
+        <h2 *ngIf="!this.selectedDeviceId">カメラが未選択です</h2>
+    </div>
+    <div *ngIf="!hasCameras && hasPermission === true">
+        <h1>デバイスにカメラが存在しません。</h1>
+    </div>
+    <div *ngIf="hasPermission === undefined">
+        <h1>カメラの使用が許可されるのを待っています。</h1>
+    </div>
+    <div *ngIf="hasPermission === false">
+        <h1>カメラの使用が許可されませんでした。😪</h1>
+    </div>
+</div>
+<div *ngIf="isDebugMode">
+    <button (click)="sendData('aaaaaaaaaaaaaaaaa')">データを送る</button>
+</div>
