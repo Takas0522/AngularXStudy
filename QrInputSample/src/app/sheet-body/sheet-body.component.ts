@@ -54,7 +54,6 @@ export class SheetBodyComponent implements OnInit {
       this.hasCameras = true;
       this.availableDevices = devices;
       if (this.availableDevices.length > 1) {
-        // 弊社携帯対策（外カメラは配列0ではなく1のカメラ）
         this.selectedDeviceId = this._scanner.getDeviceById(this.availableDevices[1].deviceId).deviceId;
       } else {
         this.selectedDeviceId = this._scanner.getDeviceById(this.availableDevices[0].deviceId).deviceId;
