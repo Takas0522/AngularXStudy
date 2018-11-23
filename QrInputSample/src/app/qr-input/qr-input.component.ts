@@ -30,7 +30,7 @@ export class QrInputComponent implements OnInit, OnDestroy {
     if (this.isSuccesFlow) {
       return;
     }
-    const res = this._bottomComp.open(SheetBodyComponent, { data: this._qrInputService });
+    const res = this._bottomComp.open(SheetBodyComponent);
     this._qrInputService.scanSuccess.subscribe(x => {
       const con = <HTMLInputElement>this._el.nativeElement.querySelector('input');
       con.value = x;
