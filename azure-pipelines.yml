@@ -6,11 +6,15 @@ queue:
 
 steps:
 - task: Npm@1
-  displayName: 'npm install'
+  displayName: 'npm ci'
   inputs:
+    command: custom
+
     workingDir: AngularWithJest
 
     verbose: false
+
+    customCommand: 'ci'
 
 
 - task: Npm@1
@@ -31,6 +35,15 @@ steps:
     testResultsFiles: '**/junit.xml'
 
   condition: always()
+
+- task: PublishCodeCoverageResults@1
+  displayName: 'Publish code coverage from $(System.DefaultWorkingDirectory)/**/cobertura-coverage.xml'
+  inputs:
+    codeCoverageTool: Cobertura
+
+    summaryFileLocation: '$(System.DefaultWorkingDirectory)/**/cobertura-coverage.xml'
+
+    reportDirectory: '$(System.DefaultWorkingDirectory)/**/coverage'
 
 - task: Npm@1
   displayName: 'npm build'
