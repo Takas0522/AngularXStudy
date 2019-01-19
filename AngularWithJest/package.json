@@ -7,7 +7,7 @@
     "build": "ng build",
     "test": "jest --reporters=default",
     "test:watch": "jest --watch",
-    "test:ci": "jest --reporters=jest-junit",
+    "test:ci": "jest --reporters=jest-junit --coverage",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "prod-build": "ng build --prod"
@@ -58,6 +58,11 @@
     "reporters": [
       "default",
       "jest-junit"
+    ],
+    "coverageReporters": [
+      "text",
+      "html",
+      "cobertura"
     ]
   }
 }
