@@ -1,0 +1,20 @@
+<form [formGroup]="fg" (ngSubmit)="submit()">
+  <div>
+    <mat-form-field>
+      <input matInput placeholder="郵便番号" formControlName="zipCode"/>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <input matInput placeholder="県" formControlName="prefecture" />
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <input matInput placeholder="市" formControlName="city" />
+    </mat-form-field>
+  </div>
+  <button mat-flat-button type="submit" color="primary">
+    住所確定
+  </button>
+</form>

@@ -1,0 +1,17 @@
+<form [formGroup]="fg">
+  <div>
+    <mat-form-field>
+      <input matInput placeholder="ユーザーID" formControlName="userId" required />
+    </mat-form-field>
+  </div>
+  <div>
+    <app-name-input [fg]="fg"></app-name-input>
+  </div>
+  <div>
+    <app-address-input-dialog formControlName="address"></app-address-input-dialog>
+  </div>
+  <div>
+    Result： {{formResult}}
+  </div>
+</form>
+<button mat-button (click)="patchData()">データを反映する</button>
