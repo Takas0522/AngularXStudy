@@ -1,0 +1,18 @@
+<form [formGroup]="sampleInputFormGroup" (submit)="submitData()">
+  <div>
+    <input placeholder="First Name" formControlName="firstName" />
+  </div>
+  <div>
+    <input placeholder="Last Name"  formControlName="lastName"/>
+  </div>
+  <div>
+    <select [compareWith]="departmentCompare" placeholder="Department" formControlName="department">
+      <ng-template ngFor let-department [ngForOf]="departmentData$ | async">
+        <option [ngValue]="department.code">{{department.name}}</option>
+      </ng-template>
+    </select>
+  </div>
+  <button type="submit">Submit</button>
+  <button type="button" (click)="clearForm()">Clear</button>
+  <button type="button" (click)="getInputData()">Refresh</button>
+</form>
