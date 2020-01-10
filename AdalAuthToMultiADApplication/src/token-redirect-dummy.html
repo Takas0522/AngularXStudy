@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Frame Redirect</title>
+    <script src="https://secure.aadcdn.microsoftonline-p.com/lib/1.0.17/js/adal.min.js"></script> 
+</head>
+<body>
+    <script>
+        var adalConfig = {
+            clientId: "1fc7790c-aed0-48c0-bc87-fc8f279b050c"
+        };
+        var authContext = new AuthenticationContext(adalConfig);
+        authContext.handleWindowCallback();
+        if (window === window.parent) { window.location.replace(location.origin + location.hash); }
+    </script>
+</body>
