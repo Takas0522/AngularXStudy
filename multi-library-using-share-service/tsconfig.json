@@ -1,0 +1,37 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "custom-lib1": [
+        "dist/custom-lib1/custom-lib1",
+        "dist/custom-lib1"
+      ],
+      "shared-custom-lib": [
+        "dist/shared-custom-lib/shared-custom-lib",
+        "dist/shared-custom-lib"
+      ],
+      "custom-lib2": [
+        "dist/custom-lib2/custom-lib2",
+        "dist/custom-lib2"
+      ]
+    }
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  }
+}
