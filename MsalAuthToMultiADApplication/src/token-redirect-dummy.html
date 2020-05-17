@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Frame Redirect</title>
+    <script type="text/javascript" src="https://alcdn.msauth.net/lib/1.1.3/js/msal.min.js" integrity="sha384-kYijiCrNWywvKX1VI7259ktIf0ebXhlDeVD2dBEX+GeVbmY1GEboq3dsDDvYuDP/" crossorigin="anonymous"></script>
+</head>
+<body>
+    <script>
+        var adalConfig = {
+            clientId: "6b4f866c-85a8-4f72-a2a0-0ad0166205e5",
+            authority: "https://login.microsoftonline.com/028db01b-7420-42ce-ba2e-6efb6ac11c10"
+        };
+        var authContext = new AuthenticationContext(adalConfig);
+        authContext.handleWindowCallback();
+        if (window === window.parent) { console.log('redirect'); window.location.replace(location.origin + location.hash); }
+    </script>
+</body>
