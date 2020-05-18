@@ -27,6 +27,10 @@
       "custom-lib2": [
         "dist/custom-lib2/custom-lib2",
         "dist/custom-lib2"
+      ],
+      "custom-lib3": [
+        "dist/custom-lib3/custom-lib3",
+        "dist/custom-lib3"
       ]
     }
   },

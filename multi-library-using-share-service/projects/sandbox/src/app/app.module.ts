@@ -6,6 +6,8 @@ import { CustomLib2Module } from 'custom-lib2';
 // import { CustomLib2Module } from 'projects/custom-lib2/src/lib/custom-lib2.module';
 import { AppComponent } from './app.component';
 import { SharedCustomLibService } from 'shared-custom-lib';
+import { CustomLib3Module } from 'projects/custom-lib3/src/lib/custom-lib3.module';
+import { AppRoutingModule } from './app-routing.module';
 
 
 @NgModule({
@@ -14,8 +16,9 @@ import { SharedCustomLibService } from 'shared-custom-lib';
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     CustomLib1Module.forRoot({ applicationId: 'Lib1ModuleApplicationid', endPointUrl: 'Lib1EndPointUrl' }),
-    CustomLib2Module.forRoot({ applicationId: 'Lib2ModuleApplicationid', endPointUrl: 'Lib2EndPointUrl' }),
+    CustomLib2Module.forRoot({ applicationId: 'Lib2ModuleApplicationid', endPointUrl: 'Lib2EndPointUrl' })
   ],
   providers: [
     { provide: 'SHARED_SERVICE', useClass: SharedCustomLibService }
