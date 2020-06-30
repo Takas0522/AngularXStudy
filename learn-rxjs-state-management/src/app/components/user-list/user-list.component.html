@@ -1,0 +1,16 @@
+<div>
+    <div>
+        <input #freeword type="text">
+        <label>
+            <input type="checkbox" [(ngModel)]="isAdmin" (ngModelChange)="valueChanged()">
+            管理者
+        </label>
+    </div>
+    <div>
+        <div *ngFor="let user of users">
+            <div>
+                なまえ: {{user.name}}
+            </div>
+        </div>
+    </div>
+</div>
