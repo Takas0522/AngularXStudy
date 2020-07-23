@@ -6,5 +6,6 @@ export const environment = {
       redirectUri: 'https://takas-auth-test.azurewebsites.net/',
       authority: 'https://login.microsoftonline.com/to19880522outlook.onmicrosoft.com/'
     }
-  }
+  },
+  redirectDummy: 'https://takas-auth-test.azurewebsites.net/redirect-page.html'
 };

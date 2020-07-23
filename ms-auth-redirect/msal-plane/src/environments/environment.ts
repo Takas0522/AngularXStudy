@@ -7,11 +7,13 @@ export const environment = {
   msalConfig: {
     auth: {
       clientId: '26a0b8a6-5a21-43a9-a5ee-f37149972cd4',
-      redirectUri: 'http://localhost:4200',
-      authority: 'https://login.microsoftonline.com/to19880522outlook.onmicrosoft.com/'
+      authority: 'https://login.microsoftonline.com/to19880522outlook.onmicrosoft.com/',
+      redirectUri: 'http://localhost:4200'
     }
   },
-  redirectDummy: 'http://localhost:4200/redirect-page.html'
+  msalScopes: [
+    'user.read'
+  ]
 };
 
 /*

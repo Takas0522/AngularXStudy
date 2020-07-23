@@ -3,15 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  msalConfig: {
-    auth: {
-      clientId: '26a0b8a6-5a21-43a9-a5ee-f37149972cd4',
-      redirectUri: 'http://localhost:4200',
-      authority: 'https://login.microsoftonline.com/to19880522outlook.onmicrosoft.com/'
-    }
-  },
-  redirectDummy: 'http://localhost:4200/redirect-page.html'
+  production: false
 };
 
 /*

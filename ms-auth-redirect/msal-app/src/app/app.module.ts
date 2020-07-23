@@ -5,17 +5,21 @@ import { AppComponent } from './app.component';
 import { MsalModule, MsalService } from '@azure/msal-angular';
 import { RouterModule, Route } from '@angular/router';
 import { environment } from 'src/environments/environment';
+import { DummyRoutingAppComponent } from './dummy-routing-app/dummy-routing-app.component';
 
-const router: Route[] = [];
+const router: Route[] = [
+  { path: 'dummy-routing', component: DummyRoutingAppComponent }
+];
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DummyRoutingAppComponent
   ],
   imports: [
     BrowserModule,
-    MsalModule.forRoot(environment.msalConfig),
-    RouterModule.forRoot(router)
+    RouterModule.forRoot(router, { useHash: true }),
+    MsalModule.forRoot(environment.msalConfig)
   ],
   providers: [
     MsalService
