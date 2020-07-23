@@ -33,12 +33,12 @@ export class MsalService {
   }
 
   loginRedirect(): void {
-    this.client.loginRedirect({ scopes: [ 'user.read', 'api://cd39e3a7-0a98-44e5-92fd-80c9e9a27d19/api.call' ] });
+    this.client.loginRedirect({ scopes: [ 'user.read', 'https://to19880522outlook.onmicrosoft.com/TrtMsalV2.Api/user_impersonation' ] });
   }
 
   async acquireTokenSilentPromise(): Promise<string> {
-    const token = await this.client.acquireTokenSilent({ scopes: ['user.read', 'api://cd39e3a7-0a98-44e5-92fd-80c9e9a27d19/api.call'], account: this.accountInfo }).catch(_ => {
-      this.client.acquireTokenRedirect({ scopes: ['user.read', 'api://cd39e3a7-0a98-44e5-92fd-80c9e9a27d19/api.call'] });
+    const token = await this.client.acquireTokenSilent({ scopes: ['https://to19880522outlook.onmicrosoft.com/TrtMsalV2.Api/user_impersonation'], account: this.accountInfo }).catch(_ => {
+      this.client.acquireTokenRedirect({ scopes: ['https://to19880522outlook.onmicrosoft.com/TrtMsalV2.Api/user_impersonation'] });
     });
     console.log({ token, name: 'acToken', instance: token instanceof AuthenticationResult });
     if (token === null) {
@@ -48,7 +48,8 @@ export class MsalService {
   }
 
   acquireTokenSilent(): void {
-    this.client.acquireTokenSilent({ scopes: ['api://cd39e3a7-0a98-44e5-92fd-80c9e9a27d19/api.call'], account: this.accountInfo }).then(res =>  {
+    console.log('actoken')
+    this.client.acquireTokenSilent({ scopes: ['https://to19880522outlook.onmicrosoft.com/TrtMsalV2.Api/user_impersonation'], account: this.accountInfo }).then(res =>  {
       console.log(res);
     });
   }
