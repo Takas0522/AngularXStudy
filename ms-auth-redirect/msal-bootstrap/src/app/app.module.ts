@@ -24,22 +24,21 @@ import { RouterModule } from '@angular/router';
         consentScopes: ['user.read']
       }
     ),
-    RouterModule.forRoot([])
+    RouterModule.forRoot([], { useHash: true })
   ],
   providers: [
     MsalService
   ],
-  bootstrap: []
+  bootstrap: [AppComponent]
 })
 export class AppModule {
-
-  ngDoBootstrap(ref: ApplicationRef): void {
-    if (window !== window.parent && !window.opener) {
-      console.log('MSAL BOOTSTRAP');
-      ref.bootstrap(MsalComponent);
-    } else {
-      console.log('APP BOOTSTRAP');
-      ref.bootstrap(AppComponent);
-    }
-  }
+  // ngDoBootstrap(ref: ApplicationRef): void {
+  //   if (window !== window.parent && !window.opener) {
+  //     console.log('MSAL BOOTSTRAP');
+  //     ref.bootstrap(MsalComponent);
+  //   } else {
+  //     console.log('APP BOOTSTRAP');
+  //     ref.bootstrap(AppComponent);
+  //   }
+  // }
 }
