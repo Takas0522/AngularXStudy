@@ -10,13 +10,18 @@ export class AppComponent {
   constructor(
     private msalService: MsalService
   ) {
-    if (this.msalService.accountInfo === null) {
-      console.log(this.msalService.accountInfo)
+    this.msalInit();
+  }
+
+  async msalInit(): Promise<void> {
+    await this.msalService.handleRedirectAsync();
+    if (!this.msalService.account) {
+      this.msalService.loginRedirect();
     }
   }
 
-  async getToken(): Promise<void> {
-    const token = await this.msalService.acquireTokenSilentPromise();
-    console.log({ name: 'getToken', token });
+  async getAccessToken(): Promise<void> {
+    const token = await this.msalService.acquireTokenSilent();
+    console.log(token);
   }
 }
