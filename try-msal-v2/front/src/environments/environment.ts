@@ -6,15 +6,20 @@ import { Configuration } from '@azure/msal-browser';
 const authSetting: Configuration = {
   auth: {
     clientId: 'fc1b6a20-7f6d-4621-80e4-dcee5ec07aca',
-    authority: 'https://login.microsoftonline.com/028db01b-7420-42ce-ba2e-6efb6ac11c10/',
+    authority: 'https://login.microsoftonline.com/<TenantId>/',
     redirectUri: 'http://localhost:4200'
   }
 };
 
+const endpointTargetScope = [
+  { endPoint: '/api', scopes: [ 'api://c013af3d-8c74-42c9-bb4a-86f5736967b8/access' ] }
+];
+
 export const environment = {
   production: false,
   msalSettings: authSetting,
-  scopes: ['user.read']
+  scopes: ['api://c013af3d-8c74-42c9-bb4a-86f5736967b8/access'],
+  endpointTargetScope
 };
 
 /*

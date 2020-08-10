@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { MsalService } from './msal/msal.service';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +9,8 @@ import { MsalService } from './msal/msal.service';
 })
 export class AppComponent {
   constructor(
-    private msalService: MsalService
+    private msalService: MsalService,
+    private httpClient: HttpClient
   ) {
     this.msalInit();
   }
@@ -21,7 +23,13 @@ export class AppComponent {
   }
 
   async getAccessToken(): Promise<void> {
-    const token = await this.msalService.acquireTokenSilent();
+    const token = await this.msalService.acquireTokenSilentWithoutScopes();
     console.log(token);
+  }
+
+  accessWebApi(): void {
+    this.httpClient.get('/api/WeatherForecast').subscribe(data => {
+      console.log(data);
+    });
   }
 }
