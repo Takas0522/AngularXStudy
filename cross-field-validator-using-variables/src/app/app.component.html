@@ -1,0 +1,25 @@
+<div>
+  <div>
+    <form [formGroup]="formGroup1">
+      <input formControlName="from">
+      ~
+      <input formControlName="to">
+    </form>
+  </div>
+  <div>
+    {{formGroup1.invalid}}
+  </div>
+</div>
+
+<div>
+  <div>
+    <form [formGroup]="formGroup2">
+      <input formControlName="from">
+      ~
+      <input formControlName="to">
+    </form>
+  </div>
+  <div>
+    {{formGroup2.invalid}}
+  </div>
+</div>
