@@ -1,0 +1,25 @@
+.contnets {
+  margin: 20px;
+}
+.search {
+  width: 100%;
+  mat-form-field {
+    width: 100%;
+    input { width: 100%; }
+  }
+}
+.search-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  .search-inner {
+    margin-right: 10px;
+    width: calc(100% - 10px);
+    mat-form-field {
+      width: 100%;
+    }
+  }
+}
+
+.footer {
+  text-align: right;
+}

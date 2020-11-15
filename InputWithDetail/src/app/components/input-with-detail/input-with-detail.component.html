@@ -1,0 +1,11 @@
+<div class="contnets">
+  <div class="input">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Search" [formControl]="inputText" />
+      <mat-icon matSuffix (click)="isDetailOpen = !isDetailOpen">{{isDetailOpen | detailIconState }}</mat-icon>
+    </mat-form-field>
+    <div class="detail mat-elevation-z8" [ngStyle]="{ 'display': isDetailOpen ? '' : 'none' }">
+      <ng-template appDetail></ng-template>
+    </div>
+  </div>
+</div>
