@@ -1,0 +1,26 @@
+.detail {
+  position: absolute;
+  width: 100%;
+  z-index: 100;
+  background-color: #fff;
+  margin-top: -25px;
+}
+.contnets {
+  width: 100%;
+  mat-form-field {
+    width: 100%;
+  }
+}
+mat-icon {
+  cursor: pointer;
+}
+.wrapper {
+  position: relative;
+}
+.overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+}

@@ -1,0 +1,36 @@
+<div class="contnets">
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <div class="search">
+      <mat-form-field>
+          <input matInput placeholder="検索条件1" formControlName="search1" />
+      </mat-form-field>
+    </div>
+    <div class="search">
+      <mat-form-field>
+        <input matInput placeholder="検索条件2" formControlName="search2" />
+      </mat-form-field>
+    </div>
+    <div class="search-group">
+      <div class="search-inner">
+        <mat-form-field>
+          <input matInput placeholder="検索条件3" formControlName="search3" />
+        </mat-form-field>
+      </div>
+      <div class="search-inner">
+        <mat-form-field>
+          <input matInput placeholder="検索条件4" formControlName="search4" />
+        </mat-form-field>
+      </div>
+      <div class="search-inner">
+        <mat-form-field>
+          <input matInput placeholder="検索条件5" formControlName="search5" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="footer">
+      <button type="submit" mat-flat-button color="primary">
+        検索
+      </button>
+    </div>
+  </form>
+</div>

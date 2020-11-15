@@ -1,0 +1,22 @@
+<div class="contents">
+  <form [formGroup]="formGroup1">
+    <h1>DetailComponent1</h1>
+    <app-input-with-detail
+      [component]="d1.component"
+      formControlName="detail1">
+    </app-input-with-detail>
+    <div>
+      {{d1Text}}
+    </div>
+    <h1>DetailComponent2</h1>
+    <div style="width: 50%;">
+      <app-input-with-detail
+        [component]="d2.component"
+        formControlName="detail2">
+      </app-input-with-detail>
+    </div>
+    <div>
+      {{d2Text}}
+    </div>
+  </form>
+</div>

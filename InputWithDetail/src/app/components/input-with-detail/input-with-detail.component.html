@@ -1,0 +1,15 @@
+<div class="contnets">
+  <div class="input">
+    <mat-form-field appearance="outline">
+      <input matInput placeholder="Search" [formControl]="inputText" />
+      <mat-icon matSuffix (click)="detailToggel()">{{isDetailOpen | detailIconState }}</mat-icon>
+    </mat-form-field>
+    <div class="wrapper">
+      <div class="detail mat-elevation-z8" [ngStyle]="{ 'display': isDetailOpen ? '' : 'none' }">
+        <ng-template appDetail></ng-template>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="overlay mat-elavation-z7" *ngIf="isDetailOpen" (click)="isDetailOpen = !isDetailOpen">
+</div>
