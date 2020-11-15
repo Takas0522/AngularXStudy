@@ -1,14 +1,15 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { DetailComponentInterface } from '../models/detail-component.interface';
 
 @Component({
   selector: 'app-detail',
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.scss']
 })
-export class DetailComponent implements OnInit {
+export class DetailComponent implements OnInit, DetailComponentInterface {
 
-  @Output() detailSubmit = new EventEmitter();
+  @Output() detailSubmit$ = new EventEmitter();
 
   formGroup = new FormGroup({
     search1: new FormControl(null),
@@ -18,13 +19,14 @@ export class DetailComponent implements OnInit {
     search5: new FormControl(null),
   });
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit(): void {
   }
 
-  submit(): void {
-    this.detailSubmit.next(this.formGroup.value);
+  onSubmit(): void {
+    this.detailSubmit$.next(this.formGroup.value);
   }
 
 }

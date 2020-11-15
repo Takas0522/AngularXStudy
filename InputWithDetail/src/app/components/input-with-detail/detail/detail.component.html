@@ -1,5 +1,5 @@
-<div class="contnets" (ngSubmit)="submit()">
-  <form [formGroup]="formGroup">
+<div class="contnets">
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
     <div class="search">
       <mat-form-field>
           <input matInput placeholder="検索条件1" formControlName="search1" />

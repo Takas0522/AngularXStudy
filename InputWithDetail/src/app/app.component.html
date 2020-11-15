@@ -1,57 +1,11 @@
 <div class="contents">
-  <app-input-with-detail></app-input-with-detail>
+  <form [formGroup]="formGroup1">
+    <app-input-with-detail
+      [component]="d1.component"
+      formControlName="detail1">
+    </app-input-with-detail>
+  </form>
   <div>
-    
-  </div>
-  <div>
-    なんやらかんやら
-  </div>
-  <div>
-    なんやらかんやら
-  </div>
-  <div>
-    なんやらかんやら
-  </div>
-  <div>
-    なんやらかんやら
-  </div>
-  <div>
-    なんやらかんやら
-  </div>
-  <div>
-    なんやらかんやら
-  </div>
-  <div>
-    なんやらかんやら
-  </div>
-  <div>
-    なんやらかんやら
-  </div>
-  <div>
-    なんやらかんやら
-  </div>
-  <div>
-    なんやらかんやら
-  </div>
-  <div>
-    なんやらかんやら
-  </div>
-  <div>
-    なんやらかんやら
-  </div>
-  <div>
-    なんやらかんやら
-  </div>
-  <div>
-    なんやらかんやら
-  </div>
-  <div>
-    なんやらかんやら
-  </div>
-  <div>
-    なんやらかんやら
-  </div>
-  <div>
-    なんやらかんやら
+    {{d1Text}}
   </div>
 </div>
