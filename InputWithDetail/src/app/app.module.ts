@@ -9,9 +9,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DetailIconStatePipe } from './components/input-with-detail/detail-icon-state.pipe';
 import { DetailDirective } from './components/input-with-detail/detail.directive';
+import { Detail2Component } from './components/input-with-detail/detail2/detail2.component';
+import { MatNativeDateModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -19,7 +22,8 @@ import { DetailDirective } from './components/input-with-detail/detail.directive
     InputWithDetailComponent,
     DetailComponent,
     DetailIconStatePipe,
-    DetailDirective
+    DetailDirective,
+    Detail2Component
   ],
   imports: [
     BrowserModule,
@@ -28,7 +32,9 @@ import { DetailDirective } from './components/input-with-detail/detail.directive
     MatIconModule,
     MatFormFieldModule,
     MatButtonModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

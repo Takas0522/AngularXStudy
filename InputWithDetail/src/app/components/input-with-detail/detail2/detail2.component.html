@@ -1,0 +1,28 @@
+<div class="contents">
+  <form class="search" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input matInput placeholder="文字検索" formControlName="textInput" />
+    </mat-form-field>
+    <div class="date-group">
+      <div class="from">
+        <mat-form-field>
+          <mat-label>Date From</mat-label>
+          <input matInput [matDatepicker]="picker1" formControlName="dateInput1" />
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="to">
+        <mat-form-field>
+          <mat-label>Date To</mat-label>
+          <input matInput [matDatepicker]="picker2" formControlName="dateInput2" />
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <button type="submit" mat-flat-button color="warn">
+      Submit
+    </button>
+  </form>
+</div>
