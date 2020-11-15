@@ -29,6 +29,7 @@ export class InputWithDetailComponent<C extends DetailComponentInterface, D> imp
   inputText = new FormControl('');
   private compoentRef: ComponentRef<DetailComponentInterface>;
   private controlValueChange!: BehaviorSubject<InputWithDetailValueInterface<D>>;
+  private detailData: InputWithDetailValueInterface<D>;
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver
@@ -55,6 +56,7 @@ export class InputWithDetailComponent<C extends DetailComponentInterface, D> imp
     this.compoentRef.instance.detailSubmit$.subscribe(x => {
       const d = this.controlValueChange.value;
       d.detail = x;
+      this.detailData = x;
       this.controlValueChange.next(d);
       this.isDetailOpen = false;
     });
@@ -64,7 +66,15 @@ export class InputWithDetailComponent<C extends DetailComponentInterface, D> imp
   private valueInit(): void {
     const text = this.inputText.value;
     const val = this.compoentRef.instance.formGroup.value;
+    this.detailData = val;
     this.controlValueChange = new BehaviorSubject({ inputText: text, detail: val });
+  }
+
+  detailToggel(): void {
+    if (!this.isDetailOpen) {
+      this.compoentRef.instance.formGroup.patchValue(this.detailData);
+    }
+    this.isDetailOpen = !this.isDetailOpen;
   }
 
   writeValue(obj: InputWithDetailValueInterface<D>): void {
