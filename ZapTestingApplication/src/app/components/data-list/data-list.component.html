@@ -1,0 +1,14 @@
+<div class="list" *ngFor="let data of datas">
+    <div>
+        {{data.id}}
+    </div>
+    <div>
+        {{data.name}}
+    </div>
+    <div>
+        {{data.addDate | date: 'yyyy/MM/dd'}}
+    </div>
+    <div>
+        <a routerLink="/edit/{{data.id}}">編集</a>
+    </div>
+</div>
