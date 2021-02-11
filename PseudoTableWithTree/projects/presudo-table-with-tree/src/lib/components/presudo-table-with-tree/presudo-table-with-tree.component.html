@@ -1,0 +1,26 @@
+<mat-list>
+  <mat-list-item>
+    <ptt-line-item [items]="columnNames"></ptt-line-item>
+    <mat-divider></mat-divider>
+  </mat-list-item>
+  <ng-container *ngFor="let item of _outputDataSource | async">
+    <mat-list-item>
+      <mat-tree [dataSource]="item.treeDataSource" [treeControl]="item.treeControl">
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
+          <button mat-icon-button disabled></button>
+          <ptt-line-item [items]="item.value"></ptt-line-item>
+        </mat-tree-node>
+        <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
+          <button mat-icon-button matTreeNodeToggle
+                  [attr.aria-label]="'Toggle ' + node.name">
+            <mat-icon class="mat-icon-rtl-mirror">
+              {{item.treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+            </mat-icon>
+          </button>
+          <ptt-line-item [items]="item.value"></ptt-line-item>
+        </mat-tree-node>
+      </mat-tree>
+      <mat-divider></mat-divider>
+    </mat-list-item>
+  </ng-container>
+</mat-list>
