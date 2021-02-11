@@ -43,18 +43,19 @@ export class AppComponent implements OnInit {
     */
     await this.handleRedirectCallbackPromise();
     this.adalInitAndHandleRedirect();
-    this.msalAqureTokenApi();
+    await this.msalAqureTokenApi();
     this.adalAqureToken();
-    this.msalAqureTokenGraph();
+    await this.msalAqureTokenGraph();
   }
 
   private async handleRedirectCallbackPromise(): Promise<void> {
     const res = await this.msalClient.handleRedirectPromise();
-    console.log(res);
+    console.log(res?.account);
     if (typeof res === 'undefined') {
       alert('undefined!!!');
     }
     if (!res) {
+      console.log('login');
       this.msalClient.loginRedirect({ scopes: [ 'api://b467f2f1-a6b7-4656-88fe-5f334d95d656/api' ] });
       return;
     }
@@ -99,6 +100,7 @@ export class AppComponent implements OnInit {
   }
 
   private adalAqureToken(): void {
+    console.log('adalAqureToken');
     (this.adalSevice as any).context.callback = (err: string, token: string, msg: string) => {
       console.log({err: { err, token, msg}});
     };
@@ -107,27 +109,22 @@ export class AppComponent implements OnInit {
       (this.adalSevice as any).context.acquireTokenRedirect('https://graph.microsoft.com');
       return;
     }
-    console.log({adalSevice: accessToken});
+    console.log({adalAqureToken: accessToken});
   }
 
-  private msalAqureTokenApi(): null | string {
-    const res = this.loadMsalToken('api://04ae08a5-78b2-4e43-af59-c8f932f93cd4/access');
-    if (res) {
-      console.log({msalAqureTokenApi: res, scope: 'api://04ae08a5-78b2-4e43-af59-c8f932f93cd4/access'})
-      return res;
-    }
-    this.msalClient.acquireTokenRedirect({ scopes: ['api://04ae08a5-78b2-4e43-af59-c8f932f93cd4/access'] });
-    return null;
+  private async msalAqureTokenApi(): Promise<null | string> {
+    console.log('msalAqureTokenApi');
+    this.msalClient.setActiveAccount(this.msalClient.getAllAccounts()[0]);
+    const res = await this.msalClient.acquireTokenSilent({ scopes: ['api://04ae08a5-78b2-4e43-af59-c8f932f93cd4/access'] });
+    console.log({msalAqureTokenSilentApi: res});
+    return res.accessToken;
   }
 
-  private msalAqureTokenGraph(): null | string {
-    const res = this.loadMsalToken('user.read');
-    if (res) {
-      console.log({msalAqureTokenGraph: res, scope: 'user.read'})
-      return res;
-    }
-    this.msalClient.acquireTokenRedirect({ scopes: ['user.read'] });
-    return null;
+  private async msalAqureTokenGraph(): Promise<null | string> {
+    console.log('msalAqureTokenGraph');
+    const res = await this.msalClient.acquireTokenSilent({ scopes: ['api://04ae08a5-78b2-4e43-af59-c8f932f93cd4/access'] });
+    console.log({msalAqureTokenSilentGraph: res});
+    return res.accessToken;
   }
 
 
