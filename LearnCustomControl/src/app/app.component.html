@@ -2,7 +2,11 @@
   <app-sample-control formControlName="inputOne"></app-sample-control>
   <app-sample-control formControlName="inputTwo"></app-sample-control>
   <app-multi-input-control formControlName="inputThree"></app-multi-input-control>
+  <app-modal-input formControlName="inputFour"
+    [errorCollection]="errorMessageCollection">
+  </app-modal-input>
   <button (click)="submitCheck()">sumitcheck</button>
+  <button (click)="allTouch()">All Touch</button>
 </form>
 <button (click)="patch()">Patch</button>
 <h1>👇からngModel</h1>
@@ -11,3 +15,7 @@
 
 <app-multi-input-control [(ngModel)]="multiInputValue"></app-multi-input-control>
 {{multiInputValue.val1}}{{multiInputValue.val2}}
+<div>
+  <app-modal-input [(ngModel)]="modalInputValue"></app-modal-input>
+</div>
+{{modalInputString}}

@@ -1,12 +1,12 @@
-import { Component, OnInit, Optional, Self } from '@angular/core';
-import { FormControl, NgControl } from '@angular/forms';
+import { Component, DoCheck, OnInit, Optional, Self } from '@angular/core';
+import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
 
 @Component({
   selector: 'app-sample-control',
   templateUrl: './sample-control.component.html',
   styleUrls: ['./sample-control.component.scss']
 })
-export class SampleControlComponent implements OnInit {
+export class SampleControlComponent implements OnInit, ControlValueAccessor, DoCheck {
   inputCtrl = new FormControl('');
   private onChange: any = (obj: any) => {};
   private onTouched: any = (obj: any) => {};
@@ -52,11 +52,9 @@ export class SampleControlComponent implements OnInit {
 
 
   writeValue(obj: any): void {
-    console.log('writeValue')
     this.inputCtrl.patchValue(obj);
   }
   registerOnChange(fn: any): void {
-    console.log('registerOnChange')
     this.onChange = fn;
   }
   registerOnTouched(fn: any): void {

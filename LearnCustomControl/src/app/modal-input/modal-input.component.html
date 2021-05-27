@@ -1,0 +1,27 @@
+<div>
+  <button (click)="opedDialog()">OPENDIALOG</button>
+</div>
+<dialog #dialog>
+  <form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <div>
+      <input formControlName="zip" placeholder="Zip" />
+      {{ hasZipError() }}
+      <div>
+        {{ formGroup.errors | errorMessageGenerator : errorCollection : 'zip'}}
+      </div>
+    </div>
+    <div>
+      <input formControlName="address1" placeholder="Address1" />
+      {{hasAddress1Error()}}
+      <div>
+        {{ formGroup.errors | errorMessageGenerator : errorCollection : 'address1'}}
+      </div>
+    </div>
+    <div>
+      <input formControlName="address2" placeholder="Address2" />
+    </div>
+    <div>
+      <button type="submit">Submit</button>
+    </div>
+  </form>
+</dialog>

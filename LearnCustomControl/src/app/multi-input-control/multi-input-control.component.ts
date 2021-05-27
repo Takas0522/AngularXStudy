@@ -1,12 +1,12 @@
-import { Component, OnInit, Optional, Self } from '@angular/core';
-import { FormControl, NgControl } from '@angular/forms';
+import { Component, DoCheck, OnInit, Optional, Self } from '@angular/core';
+import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
 
 @Component({
   selector: 'app-multi-input-control',
   templateUrl: './multi-input-control.component.html',
   styleUrls: ['./multi-input-control.component.scss']
 })
-export class MultiInputControlComponent implements OnInit {
+export class MultiInputControlComponent implements OnInit, ControlValueAccessor, DoCheck {
   inputCtrl1 = new FormControl('');
   inputCtrl2 = new FormControl('');
   private onChange: any = (obj: any) => {};
@@ -17,7 +17,6 @@ export class MultiInputControlComponent implements OnInit {
     @Self()
     private ngControl: NgControl
   ) {
-    console.log(ngControl)
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
     }
