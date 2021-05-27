@@ -1,0 +1,13 @@
+<form [formGroup]="formGroup">
+  <app-sample-control formControlName="inputOne"></app-sample-control>
+  <app-sample-control formControlName="inputTwo"></app-sample-control>
+  <app-multi-input-control formControlName="inputThree"></app-multi-input-control>
+  <button (click)="submitCheck()">sumitcheck</button>
+</form>
+<button (click)="patch()">Patch</button>
+<h1>👇からngModel</h1>
+<app-sample-control [(ngModel)]="controlValue"></app-sample-control>
+{{controlValue}}
+
+<app-multi-input-control [(ngModel)]="multiInputValue"></app-multi-input-control>
+{{multiInputValue.val1}}{{multiInputValue.val2}}
