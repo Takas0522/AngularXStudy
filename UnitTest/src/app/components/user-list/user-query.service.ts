@@ -15,7 +15,7 @@ export class UserQueryService {
 
   constructor() { }
 
-  filterUserList(filterWord: string): void {
+  filterUserList(data: {searchInput: string, isAdmin: boolean, isCommonUser: boolean}): void {
   }
 
   fetch(): void {

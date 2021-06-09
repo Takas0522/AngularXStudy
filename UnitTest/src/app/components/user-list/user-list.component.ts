@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, pipe } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
@@ -13,7 +13,12 @@ import { UserQueryService } from './user-query.service';
 })
 export class UserListComponent implements OnInit {
 
-  searchInput: FormControl = new FormControl('');
+  formGroup = new FormGroup({
+    searchInput: new FormControl(''),
+    isAdmin: new FormControl(true),
+    isCommonUser: new FormControl(true)
+  });
+
   userList$!: Observable<UserInterface[]>;
 
   constructor(
@@ -27,9 +32,15 @@ export class UserListComponent implements OnInit {
   }
 
   private controlInit(): void {
-    this.searchInput.valueChanges.pipe(
+    this.formGroup.valueChanges.pipe(
       debounceTime(200),
-      distinctUntilChanged()
+      distinctUntilChanged<{searchInput: string, isAdmin: boolean, isCommonUser: boolean}>((prev, current) => {
+        return (
+          prev.isAdmin === current.isAdmin &&
+          prev.isCommonUser === current.isCommonUser &&
+          prev.searchInput === current.searchInput
+        );
+      })
     ).subscribe(x => {
       this.query.filterUserList(x);
     });

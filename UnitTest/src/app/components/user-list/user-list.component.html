@@ -1,7 +1,17 @@
 <div class="contents">
     <mat-card>
-        <mat-form-field>
-            <input matInput [formControl]="searchInput" placeholder="Search" />
-        </mat-form-field>
+        <form [formGroup]="formGroup">
+            <div>
+                <mat-form-field>
+                    <input matInput formControlName="searchInput" placeholder="Search" />
+                </mat-form-field>
+            </div>
+            <div>
+                <section>
+                    <mat-checkbox formControlName="isAdmin">管理者</mat-checkbox>
+                    <mat-checkbox formControlName="isCommonUser">一般ユーザー</mat-checkbox>
+                </section>
+            </div>
+        </form>
     </mat-card>
 </div>

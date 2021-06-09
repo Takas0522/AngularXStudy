@@ -14,6 +14,7 @@ import { UserInterface } from 'src/app/models/user.interface';
 import { UserListComponent } from './user-list.component';
 import { UserQueryService } from './user-query.service';
 import { Location } from '@angular/common';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 describe('UserListComponent', () => {
   let component: UserListComponent;
@@ -32,6 +33,7 @@ describe('UserListComponent', () => {
         MatInputModule,
         ReactiveFormsModule,
         NoopAnimationsModule,
+        MatCheckboxModule,
         RouterTestingModule.withRoutes(routes)
       ],
       providers: [
@@ -72,7 +74,11 @@ describe('UserListComponent', () => {
     it ('Load時の検索項目の初期値は空となっていること', () => {
       // componentの初期値などのテスト。FormGroupやFormControlなんか使っていると案外テストしやすい
       // 正味Controlと画面のバインドが適切に行われているか？とかはテストしなくても良いんでないかと思っている
-      expect(component.searchInput.value).toEqual('');
+      expect(component.formGroup.value).toEqual({
+        searchInput: '',
+        isAdmin: true,
+        isCommonUser: true
+      });
     });
   });
 
@@ -101,14 +107,30 @@ describe('UserListComponent', () => {
     it ('検索文字列入力後、QueryのfilterUserListが叩かれること', fakeAsync(() => {
       spyOn(queryStub, 'filterUserList');
       // setTimeoutやdebouceTimeなどの非同期処理を行う場合はfakeAsyncを使用する
-      component.searchInput.patchValue('testvalue');
+      component.formGroup.patchValue({searchInput: 'testvalue'});
       fixture.detectChanges();
       // ComponentのdebouceTimeは200ms待機するのでここでも200ms待機
       tick(200);
       // このメソッド呼んだ？ってテスト
       expect(queryStub.filterUserList).toHaveBeenCalled();
       // このメソッドこの引数で呼んだ？ってテスト
-      expect(queryStub.filterUserList).toHaveBeenCalledWith('testvalue');
+      expect(queryStub.filterUserList).toHaveBeenCalledWith({
+        isAdmin: true,
+        isCommonUser: true,
+        searchInput: 'testvalue'
+      });
+    }));
+    it ('検索文字列入力後、200ms未満であればfilterUserListが叩かれないこと', fakeAsync(() => {
+      spyOn(queryStub, 'filterUserList');
+      // setTimeoutやdebouceTimeなどの非同期処理を行う場合はfakeAsyncを使用する
+      component.formGroup.patchValue({searchInput: 'testvalue'});
+      fixture.detectChanges();
+      // ComponentのdebouceTimeは200ms待機するのでここでも200ms待機
+      tick(100);
+      // このメソッド呼んだ？ってテスト
+      expect(queryStub.filterUserList).not.toHaveBeenCalled();
+      // 残りの100msを実行しタスクを空にする(tick指定時間数分実行しないとタスクに結果がオチてこない→flushしても溜まってないので意味がない)
+      tick(100);
     }));
   });
 
