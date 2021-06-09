@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable, pipe } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { UserInterface } from 'src/app/models/user.interface';
-import { UsersService } from 'src/app/services/users.service';
+import { UserListService } from './user-list.service';
 import { UserQueryService } from './user-query.service';
 
 @Component({
@@ -24,7 +24,7 @@ export class UserListComponent implements OnInit {
 
   constructor(
     private query: UserQueryService,
-    private service: UsersService,
+    private service: UserListService,
     private router: Router
   ) { }
 

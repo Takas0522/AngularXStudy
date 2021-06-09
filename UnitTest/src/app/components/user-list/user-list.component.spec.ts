@@ -15,13 +15,13 @@ import { UserListComponent } from './user-list.component';
 import { UserQueryService } from './user-query.service';
 import { Location } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { UsersService } from 'src/app/services/users.service';
+import { UserListService } from './user-list.service';
 
 describe('UserListComponent', () => {
   let component: UserListComponent;
   let fixture: ComponentFixture<UserListComponent>;
   let queryStub: UserQueryService;
-  let serviceStub: UsersService;
+  let serviceStub: UserListService;
   let routerLocation: Location;
   const stubSubject = new Subject<UserInterface[]>();
 
@@ -50,7 +50,7 @@ describe('UserListComponent', () => {
           }
         },
         {
-          provide: UsersService,
+          provide: UserListService,
           useValue: {
             fetch(): void {}
           }
@@ -66,7 +66,7 @@ describe('UserListComponent', () => {
     // DIしたSpyオブジェクトを参照する
     fixture.detectChanges();
     queryStub = fixture.debugElement.injector.get(UserQueryService);
-    serviceStub = fixture.debugElement.injector.get(UsersService);
+    serviceStub = fixture.debugElement.injector.get(UserListService);
     // AngularのLocaltion取得のため
     routerLocation = fixture.debugElement.injector.get(Location);
   });
