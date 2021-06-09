@@ -15,11 +15,13 @@ import { UserListComponent } from './user-list.component';
 import { UserQueryService } from './user-query.service';
 import { Location } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { UsersService } from 'src/app/services/users.service';
 
 describe('UserListComponent', () => {
   let component: UserListComponent;
   let fixture: ComponentFixture<UserListComponent>;
   let queryStub: UserQueryService;
+  let serviceStub: UsersService;
   let routerLocation: Location;
   const stubSubject = new Subject<UserInterface[]>();
 
@@ -39,12 +41,20 @@ describe('UserListComponent', () => {
       providers: [
         // SpyオブジェクトでDIをすることでSpyを使用したReturnValueやCallチェックなどを行えるようにする
         // DIでサービスを入れ替える。HTTPとか余計な処理の実行の防止と、サービスのDIチェーンの防止。interfaceが一致していればOK
-        {provide: UserQueryService, useValue: {
-          // Observableなテストの簡略化のためGetterで返却するList$はテスト内で生成したBehaviorSubject変数を使用する
-          get userList$(): Observable<UserInterface[]> { return stubSubject.asObservable(); },
-          filterUserList(filterWord: string): void {},
-          fetch(): void {}
-        }}
+        {
+          provide: UserQueryService,
+          useValue: {
+            // Observableなテストの簡略化のためGetterで返却するList$はテスト内で生成したBehaviorSubject変数を使用する
+            get userList$(): Observable<UserInterface[]> { return stubSubject.asObservable(); },
+            filterUserList(filterWord: string): void {},
+          }
+        },
+        {
+          provide: UsersService,
+          useValue: {
+            fetch(): void {}
+          }
+        },
       ]
     })
     .compileComponents();
@@ -56,6 +66,7 @@ describe('UserListComponent', () => {
     // DIしたSpyオブジェクトを参照する
     fixture.detectChanges();
     queryStub = fixture.debugElement.injector.get(UserQueryService);
+    serviceStub = fixture.debugElement.injector.get(UsersService);
     // AngularのLocaltion取得のため
     routerLocation = fixture.debugElement.injector.get(Location);
   });
@@ -67,9 +78,9 @@ describe('UserListComponent', () => {
   describe('Load', () => {
     it ('Load時はListのFetchが叩かれること', () => {
       // filterUserListをSpyしCallされたかなど認識できるようにする
-      spyOn(queryStub, 'fetch');
+      spyOn(serviceStub, 'fetch');
       component.ngOnInit();
-      expect(queryStub.fetch).toHaveBeenCalled();
+      expect(serviceStub.fetch).toHaveBeenCalled();
     });
     it ('Load時の検索項目の初期値は空となっていること', () => {
       // componentの初期値などのテスト。FormGroupやFormControlなんか使っていると案外テストしやすい

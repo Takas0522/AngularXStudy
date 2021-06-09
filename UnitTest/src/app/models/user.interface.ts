@@ -1,4 +1,4 @@
-const USER_TYPE = {
+export const USER_TYPE = {
   commonUser: 0,
   Admin: 1
 } as const;
