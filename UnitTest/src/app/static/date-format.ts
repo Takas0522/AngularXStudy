@@ -11,6 +11,9 @@ export const dateFormat = (date: Date, format: string): string => {
       if (date >= new Date(1989, 0, 8, 0, 0, 0, 0)) {
         resDate = resDate.replace('ggg', '平成');
       }
+      if (date >= new Date(1926, 11, 25, 0, 0, 0, 0)) {
+        resDate = resDate.replace('ggg', '昭和');
+      }
   }
   return resDate;
 };
