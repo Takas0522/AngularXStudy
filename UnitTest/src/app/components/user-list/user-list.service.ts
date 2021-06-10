@@ -18,4 +18,8 @@ export class UserListService {
       this.query.update(x);
     });
   }
+
+  changeChekedState(id: string): void {
+    this.query.changeChekedState(id);
+  }
 }

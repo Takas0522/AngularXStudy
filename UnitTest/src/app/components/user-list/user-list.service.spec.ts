@@ -20,7 +20,8 @@ describe('UserListService', () => {
         {
           provide: UserQueryService,
           useValue: {
-            update(datas: UserInterface[]): void { }
+            update(datas: UserInterface[]): void { },
+            changeChekedState(id: string): void {}
           }
         }
       ]
@@ -58,5 +59,13 @@ describe('UserListService', () => {
       expect(queryStub.update).toHaveBeenCalledWith(baseData);
       httpControler.verify();
     }));
+  });
+  describe('ステータス更新処理', () => {
+    it('changeChekedStateからQueryのchangeChekedStateが実行されること', () => {
+      spyOn(queryStub, 'changeChekedState');
+      service.changeChekedState('1');
+      expect(queryStub.changeChekedState).toHaveBeenCalled();
+      expect(queryStub.changeChekedState).toHaveBeenCalledWith('1');
+    });
   });
 });

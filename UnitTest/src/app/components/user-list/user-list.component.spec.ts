@@ -16,6 +16,8 @@ import { UserQueryService } from './user-query.service';
 import { Location } from '@angular/common';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UserListService } from './user-list.service';
+import { MatTableModule } from '@angular/material/table';
+import { UserWithCheckedInterface } from './models/user-with-cheked.interface';
 
 describe('UserListComponent', () => {
   let component: UserListComponent;
@@ -36,6 +38,7 @@ describe('UserListComponent', () => {
         ReactiveFormsModule,
         NoopAnimationsModule,
         MatCheckboxModule,
+        MatTableModule,
         RouterTestingModule.withRoutes(routes)
       ],
       providers: [
@@ -52,7 +55,8 @@ describe('UserListComponent', () => {
         {
           provide: UserListService,
           useValue: {
-            fetch(): void {}
+            fetch(): void {},
+            changeChekedState(id: string): void {}
           }
         },
       ]
@@ -95,7 +99,9 @@ describe('UserListComponent', () => {
 
   describe('Query動作', () => {
     it('Queryから値の変更が通知された際は、userListに変更が反映されること', fakeAsync((done: DoneFn) => {
-      const resVal: UserInterface[] = [{ userId: '1', userName: 'TS', userType: 0, registerDate: new Date(2021, 1, 1, 0, 0, 0.0) }];
+      const resVal: UserWithCheckedInterface[] = [
+        { checked: false, userId: '1', userName: 'TS', userType: 0, registerDate: new Date(2021, 1, 1, 0, 0, 0.0) }
+      ];
       component.userList$.subscribe(x => {
         expect(x).toEqual(resVal);
         // flushでマクロタスクキューを空にする(subscribeの処理を実行し空にするみたいなイメージ)
@@ -159,5 +165,12 @@ describe('UserListComponent', () => {
       flush();
       expect(routerLocation.path()).toEqual('/user');
     }));
+
+    it('チェックボックス押下処理でListの状態が更新されるファンクションが呼び出されること', () => {
+      spyOn(serviceStub, 'changeChekedState');
+      component.changeCheckedState('1');
+      expect(serviceStub.changeChekedState).toHaveBeenCalled();
+      expect(serviceStub.changeChekedState).toHaveBeenCalledWith('1');
+    });
   });
 });

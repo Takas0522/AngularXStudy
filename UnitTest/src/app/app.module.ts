@@ -9,17 +9,20 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AppRoutingModule } from './app-routing.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTableModule } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
 import { FakeBackendInterceptor } from './_mock/fake-backend.interceptor';
+import { UserTypePipe } from './pipes/user-type.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserListComponent,
     UserEditComponent,
+    UserTypePipe,
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,9 @@ import { FakeBackendInterceptor } from './_mock/fake-backend.interceptor';
     ReactiveFormsModule,
     MatCheckboxModule,
     HttpClientModule,
-    MatTableModule
+    MatTableModule,
+    MatIconModule,
+    FormsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true }

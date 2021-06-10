@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable, pipe } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { interval, Observable, pipe } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { UserInterface } from 'src/app/models/user.interface';
+import { UserWithCheckedInterface } from './models/user-with-cheked.interface';
 import { UserListService } from './user-list.service';
 import { UserQueryService } from './user-query.service';
 
@@ -20,7 +21,8 @@ export class UserListComponent implements OnInit {
     isCommonUser: new FormControl(true)
   });
 
-  userList$!: Observable<UserInterface[]>;
+  userList$!: Observable<UserWithCheckedInterface[]>;
+  displayedColumns: string[] = ['checked', 'userId', 'userName', 'registerDate', 'userType', 'edit'];
 
   constructor(
     private query: UserQueryService,
@@ -59,6 +61,10 @@ export class UserListComponent implements OnInit {
 
   editUser(userId: string): void {
     this.router.navigate(['user', userId]);
+  }
+
+  changeCheckedState(id: string): void {
+    this.service.changeChekedState(id);
   }
 
 }
