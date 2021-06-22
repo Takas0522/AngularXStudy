@@ -17,6 +17,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { FakeBackendInterceptor } from './_mock/fake-backend.interceptor';
 import { UserTypePipe } from './pipes/user-type.pipe';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { UserTypePipe } from './pipes/user-type.pipe';
     MatTableModule,
     MatIconModule,
     FormsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSelectModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true }
