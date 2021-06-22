@@ -18,6 +18,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UserListService } from './user-list.service';
 import { MatTableModule } from '@angular/material/table';
 import { UserWithCheckedInterface } from './models/user-with-cheked.interface';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 describe('UserListComponent', () => {
   let component: UserListComponent;
@@ -40,6 +42,8 @@ describe('UserListComponent', () => {
         NoopAnimationsModule,
         MatCheckboxModule,
         MatTableModule,
+        MatIconModule,
+        MatButtonModule,
         RouterTestingModule.withRoutes(routes)
       ],
       providers: [
@@ -63,7 +67,7 @@ describe('UserListComponent', () => {
         },
       ]
     })
-      .compileComponents();
+    .compileComponents();
   });
 
   beforeEach(() => {
@@ -104,7 +108,7 @@ describe('UserListComponent', () => {
       const resVal: UserWithCheckedInterface[] = [
         { checked: false, userId: '1', userName: 'TS', userType: 0, registerDate: new Date(2021, 1, 1, 0, 0, 0.0) }
       ];
-      component.userList$.subscribe(x => {
+      const testObs = component.userList$.subscribe(x => {
         expect(x).toEqual(resVal);
         // flushでマクロタスクキューを空にする(subscribeの処理を実行し空にするみたいなイメージ)
         flush();
@@ -119,6 +123,28 @@ describe('UserListComponent', () => {
         */
       });
       stubListSubject.next(resVal);
+      testObs.unsubscribe();
+    }));
+    it('someSelected$の変更が反転した状態でcanDelete$に反映されること(true->false)', fakeAsync((done: DoneFn) => {
+      const testObs = component.cantDelete$.subscribe(x => {
+        expect(x).toBeFalse();
+        flush();
+      });
+      stubSelectedSubject.next(true);
+      /*
+      同一のObservableな変数を続けてテストしたい場合がある。
+      JSの特性上、subscribeした状態は残り続けるので適切に後処理を行わないと下記のnextを実行した際に↑のテストが再実行され失敗することになる
+      そのため再度同一のテストが実行されないようにunsubscribeを行い同一のテストが実行されないように後処理を行っておく必要がある
+      */
+      testObs.unsubscribe();
+    }));
+    it('someSelected$の変更が反転した状態でcanDelete$に反映されること(false->true)', fakeAsync((done: DoneFn) => {
+      const testObs = component.cantDelete$.subscribe(x => {
+        expect(x).toBeTrue();
+        flush();
+      });
+      stubSelectedSubject.next(false);
+      testObs.unsubscribe();
     }));
   });
 
