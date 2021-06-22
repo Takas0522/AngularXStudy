@@ -23,6 +23,7 @@ export class UserListComponent implements OnInit {
 
   userList$!: Observable<UserWithCheckedInterface[]>;
   displayedColumns: string[] = ['checked', 'userId', 'userName', 'registerDate', 'userType', 'edit'];
+  canDelete$!: Observable<boolean>;
 
   constructor(
     private query: UserQueryService,
@@ -38,7 +39,7 @@ export class UserListComponent implements OnInit {
   private controlInit(): void {
     this.formGroup.valueChanges.pipe(
       debounceTime(200),
-      distinctUntilChanged<{searchInput: string, isAdmin: boolean, isCommonUser: boolean}>((prev, current) => {
+      distinctUntilChanged<{ searchInput: string, isAdmin: boolean, isCommonUser: boolean }>((prev, current) => {
         return (
           prev.isAdmin === current.isAdmin &&
           prev.isCommonUser === current.isCommonUser &&
@@ -52,6 +53,7 @@ export class UserListComponent implements OnInit {
 
   private dataInit(): void {
     this.userList$ = this.query.userList$;
+    this.canDelete$ = this.query.someSelected$.pipe(map(m => !m));
     this.service.fetch();
   }
 
