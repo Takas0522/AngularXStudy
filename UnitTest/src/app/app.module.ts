@@ -14,8 +14,10 @@ import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 import { FakeBackendInterceptor } from './_mock/fake-backend.interceptor';
 import { UserTypePipe } from './pipes/user-type.pipe';
+import { MatSelectModule } from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -36,7 +38,9 @@ import { UserTypePipe } from './pipes/user-type.pipe';
     HttpClientModule,
     MatTableModule,
     MatIconModule,
-    FormsModule
+    FormsModule,
+    MatButtonModule,
+    MatSelectModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true }

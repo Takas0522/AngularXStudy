@@ -18,6 +18,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { UserListService } from './user-list.service';
 import { MatTableModule } from '@angular/material/table';
 import { UserWithCheckedInterface } from './models/user-with-cheked.interface';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 describe('UserListComponent', () => {
   let component: UserListComponent;
@@ -25,11 +27,12 @@ describe('UserListComponent', () => {
   let queryStub: UserQueryService;
   let serviceStub: UserListService;
   let routerLocation: Location;
-  const stubSubject = new Subject<UserInterface[]>();
+  const stubListSubject = new Subject<UserInterface[]>();
+  const stubSelectedSubject = new Subject<boolean>();
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserListComponent ],
+      declarations: [UserListComponent],
       imports: [
         // Materialなど使用しているModuleはここで解決しておく
         MatCardModule,
@@ -39,6 +42,8 @@ describe('UserListComponent', () => {
         NoopAnimationsModule,
         MatCheckboxModule,
         MatTableModule,
+        MatIconModule,
+        MatButtonModule,
         RouterTestingModule.withRoutes(routes)
       ],
       providers: [
@@ -48,15 +53,16 @@ describe('UserListComponent', () => {
           provide: UserQueryService,
           useValue: {
             // Observableなテストの簡略化のためGetterで返却するList$はテスト内で生成したBehaviorSubject変数を使用する
-            get userList$(): Observable<UserInterface[]> { return stubSubject.asObservable(); },
-            filterUserList(filterWord: string): void {},
+            get userList$(): Observable<UserInterface[]> { return stubListSubject.asObservable(); },
+            get someSelected$(): Observable<boolean> { return stubSelectedSubject.asObservable(); },
+            filterUserList(filterWord: string): void { },
           }
         },
         {
           provide: UserListService,
           useValue: {
-            fetch(): void {},
-            changeChekedState(id: string): void {}
+            fetch(): void { },
+            changeChekedState(id: string): void { }
           }
         },
       ]
@@ -80,13 +86,13 @@ describe('UserListComponent', () => {
   });
 
   describe('Load', () => {
-    it ('Load時はListのFetchが叩かれること', () => {
+    it('Load時はListのFetchが叩かれること', () => {
       // filterUserListをSpyしCallされたかなど認識できるようにする
       spyOn(serviceStub, 'fetch');
       component.ngOnInit();
       expect(serviceStub.fetch).toHaveBeenCalled();
     });
-    it ('Load時の検索項目の初期値は空となっていること', () => {
+    it('Load時の検索項目の初期値は空となっていること', () => {
       // componentの初期値などのテスト。FormGroupやFormControlなんか使っていると案外テストしやすい
       // 正味Controlと画面のバインドが適切に行われているか？とかはテストしなくても良いんでないかと思っている
       expect(component.formGroup.value).toEqual({
@@ -102,7 +108,7 @@ describe('UserListComponent', () => {
       const resVal: UserWithCheckedInterface[] = [
         { checked: false, userId: '1', userName: 'TS', userType: 0, registerDate: new Date(2021, 1, 1, 0, 0, 0.0) }
       ];
-      component.userList$.subscribe(x => {
+      const testObs = component.userList$.subscribe(x => {
         expect(x).toEqual(resVal);
         // flushでマクロタスクキューを空にする(subscribeの処理を実行し空にするみたいなイメージ)
         flush();
@@ -116,15 +122,37 @@ describe('UserListComponent', () => {
         stubSubject.next(resVal);
         */
       });
-      stubSubject.next(resVal);
+      stubListSubject.next(resVal);
+      testObs.unsubscribe();
+    }));
+    it('someSelected$の変更が反転した状態でcanDelete$に反映されること(true->false)', fakeAsync((done: DoneFn) => {
+      const testObs = component.cantDelete$.subscribe(x => {
+        expect(x).toBeFalse();
+        flush();
+      });
+      stubSelectedSubject.next(true);
+      /*
+      同一のObservableな変数を続けてテストしたい場合がある。
+      JSの特性上、subscribeした状態は残り続けるので適切に後処理を行わないと下記のnextを実行した際に↑のテストが再実行され失敗することになる
+      そのため再度同一のテストが実行されないようにunsubscribeを行い同一のテストが実行されないように後処理を行っておく必要がある
+      */
+      testObs.unsubscribe();
+    }));
+    it('someSelected$の変更が反転した状態でcanDelete$に反映されること(false->true)', fakeAsync((done: DoneFn) => {
+      const testObs = component.cantDelete$.subscribe(x => {
+        expect(x).toBeTrue();
+        flush();
+      });
+      stubSelectedSubject.next(false);
+      testObs.unsubscribe();
     }));
   });
 
   describe('検索項目', () => {
-    it ('検索文字列入力後、QueryのfilterUserListが叩かれること', fakeAsync(() => {
+    it('検索文字列入力後、QueryのfilterUserListが叩かれること', fakeAsync(() => {
       spyOn(queryStub, 'filterUserList');
       // setTimeoutやdebouceTimeなどの非同期処理を行う場合はfakeAsyncを使用する
-      component.formGroup.patchValue({searchInput: 'testvalue'});
+      component.formGroup.patchValue({ searchInput: 'testvalue' });
       fixture.detectChanges();
       // ComponentのdebouceTimeは200ms待機するのでここでも200ms待機
       tick(200);
@@ -137,10 +165,10 @@ describe('UserListComponent', () => {
         searchInput: 'testvalue'
       });
     }));
-    it ('検索文字列入力後、200ms未満であればfilterUserListが叩かれないこと', fakeAsync(() => {
+    it('検索文字列入力後、200ms未満であればfilterUserListが叩かれないこと', fakeAsync(() => {
       spyOn(queryStub, 'filterUserList');
       // setTimeoutやdebouceTimeなどの非同期処理を行う場合はfakeAsyncを使用する
-      component.formGroup.patchValue({searchInput: 'testvalue'});
+      component.formGroup.patchValue({ searchInput: 'testvalue' });
       fixture.detectChanges();
       // ComponentのdebouceTimeは200ms待機するのでここでも200ms待機
       tick(100);

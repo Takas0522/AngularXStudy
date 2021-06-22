@@ -21,6 +21,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       switch (true) {
         case url.endsWith('users') && method === 'GET':
           return getUsers();
+        case url.includes('user/') && method === 'GET':
+          const urlsep = url.split('/');
+          const userId = urlsep.slice(-1)[0];
+          return getUser(userId);
         default:
           // pass through any requests not handled above
           return next.handle(req);
@@ -29,6 +33,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     function getUsers(): Observable<HttpResponse<UserInterface[]>> {
       return okResut(userDatas);
+    }
+
+    function getUser(userId: string): Observable<HttpResponse<UserInterface[]>> {
+      return okResut(userDatas.find(f => f.userId));
     }
 
     function okResut(bodyContents?: any): Observable<HttpResponse<any>> {
