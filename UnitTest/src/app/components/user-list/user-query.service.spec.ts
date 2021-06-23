@@ -1,5 +1,6 @@
 import { fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { last } from 'rxjs/operators';
+import { CHECK_STATE_VALUE } from 'src/app/constants/check-state';
 import { UserInterface } from 'src/app/models/user.interface';
 import { UserWithCheckedInterface } from './models/user-with-cheked.interface';
 import { UserQueryService } from './user-query.service';
@@ -116,7 +117,7 @@ describe('UserQueryService', () => {
       flush();
     }));
 
-    it('changeChekedStateでtrueになるデータが発生したらsomeSelected$がtrueを通知すること', fakeAsync(() => {
+    it('changeChekedStateで一部trueになるデータが発生したらselectedState$がindeterminateを通知すること', fakeAsync(() => {
       const baseData: UserInterface[] = [
         { userId: 'id1', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName1', userType: 0 },
         { userId: 'id2', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName2', userType: 0 },
@@ -125,13 +126,13 @@ describe('UserQueryService', () => {
       queryService.update(baseData);
       flush();
       queryService.changeChekedState('id1');
-      queryService.someSelected$.subscribe(x => {
-        expect(x).toBeTrue();
+      queryService.selectedState$.subscribe(x => {
+        expect(x).toEqual(CHECK_STATE_VALUE.indeterminate);
       });
       flush();
     }));
 
-    it('changeChekedStateでtrueになるデータがなくなったらsomeSelected$がfalseを通知すること', fakeAsync(() => {
+    it('changeChekedStateでtrueになるデータがなくなったらselectedState$がnothingを通知すること', fakeAsync(() => {
       const baseData: UserInterface[] = [
         { userId: 'id1', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName1', userType: 0 },
         { userId: 'id2', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName2', userType: 0 },
@@ -141,8 +142,77 @@ describe('UserQueryService', () => {
       flush();
       queryService.changeChekedState('id1');
       queryService.changeChekedState('id1');
-      queryService.someSelected$.subscribe(x => {
-        expect(x).toBeFalse();
+      queryService.selectedState$.subscribe(x => {
+        expect(x).toEqual(CHECK_STATE_VALUE.nothing);
+      });
+      flush();
+    }));
+
+    it('changeChekedStateでtrueになるデータしかなくなったらselectedState$がallを通知すること', fakeAsync(() => {
+      const baseData: UserInterface[] = [
+        { userId: 'id1', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName1', userType: 0 },
+        { userId: 'id2', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName2', userType: 0 },
+        { userId: 'id3', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName3', userType: 1 },
+      ];
+      queryService.update(baseData);
+      flush();
+      queryService.changeChekedState('id1');
+      queryService.changeChekedState('id2');
+      queryService.changeChekedState('id3');
+      queryService.selectedState$.subscribe(x => {
+        expect(x).toEqual(CHECK_STATE_VALUE.all);
+      });
+      flush();
+    }));
+
+    it('trueがない状態でallCheckStateChangeが実行されると全件データがchekcされること', fakeAsync(() => {
+      const baseData: UserInterface[] = [
+        { userId: 'id1', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName1', userType: 0 },
+        { userId: 'id2', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName2', userType: 0 },
+        { userId: 'id3', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName3', userType: 1 },
+      ];
+      queryService.update(baseData);
+      flush();
+      queryService.allCheckStateChange();
+      queryService.selectedState$.subscribe(x => {
+        expect(x).toEqual(CHECK_STATE_VALUE.all);
+      });
+      flush();
+    }));
+
+    it('trueが一部ある状態でallCheckStateChangeが実行されると全件データがchekcされること', fakeAsync(() => {
+      const baseData: UserInterface[] = [
+        { userId: 'id1', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName1', userType: 0 },
+        { userId: 'id2', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName2', userType: 0 },
+        { userId: 'id3', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName3', userType: 1 },
+      ];
+      queryService.update(baseData);
+      flush();
+      queryService.changeChekedState('id1');
+      queryService.changeChekedState('id2');
+      flush();
+      queryService.allCheckStateChange();
+      queryService.selectedState$.subscribe(x => {
+        expect(x).toEqual(CHECK_STATE_VALUE.all);
+      });
+      flush();
+    }));
+
+    it('trueしかない状態でallCheckStateChangeが実行されると全件データがcheck解除されること', fakeAsync(() => {
+      const baseData: UserInterface[] = [
+        { userId: 'id1', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName1', userType: 0 },
+        { userId: 'id2', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName2', userType: 0 },
+        { userId: 'id3', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName3', userType: 1 },
+      ];
+      queryService.update(baseData);
+      flush();
+      queryService.changeChekedState('id1');
+      queryService.changeChekedState('id2');
+      queryService.changeChekedState('id3');
+      flush();
+      queryService.allCheckStateChange();
+      queryService.selectedState$.subscribe(x => {
+        expect(x).toEqual(CHECK_STATE_VALUE.nothing);
       });
       flush();
     }));

@@ -20,6 +20,7 @@ import { MatTableModule } from '@angular/material/table';
 import { UserWithCheckedInterface } from './models/user-with-cheked.interface';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { CHECK_STATE, CHECK_STATE_VALUE } from 'src/app/constants/check-state';
 
 describe('UserListComponent', () => {
   let component: UserListComponent;
@@ -28,7 +29,7 @@ describe('UserListComponent', () => {
   let serviceStub: UserListService;
   let routerLocation: Location;
   const stubListSubject = new Subject<UserInterface[]>();
-  const stubSelectedSubject = new Subject<boolean>();
+  const stubSelectedSubject = new Subject<CHECK_STATE>();
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -54,7 +55,7 @@ describe('UserListComponent', () => {
           useValue: {
             // Observableなテストの簡略化のためGetterで返却するList$はテスト内で生成したBehaviorSubject変数を使用する
             get userList$(): Observable<UserInterface[]> { return stubListSubject.asObservable(); },
-            get someSelected$(): Observable<boolean> { return stubSelectedSubject.asObservable(); },
+            get selectedState$(): Observable<CHECK_STATE> { return stubSelectedSubject.asObservable(); },
             filterUserList(filterWord: string): void { },
           }
         },
@@ -62,7 +63,8 @@ describe('UserListComponent', () => {
           provide: UserListService,
           useValue: {
             fetch(): void { },
-            changeChekedState(id: string): void { }
+            changeChekedState(id: string): void { },
+            allCheckStateChange(): void {}
           }
         },
       ]
@@ -73,8 +75,8 @@ describe('UserListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(UserListComponent);
     component = fixture.componentInstance;
-    // DIしたSpyオブジェクトを参照する
     fixture.detectChanges();
+    // DIしたSpyオブジェクトを参照する
     queryStub = fixture.debugElement.injector.get(UserQueryService);
     serviceStub = fixture.debugElement.injector.get(UserListService);
     // AngularのLocaltion取得のため
@@ -125,25 +127,34 @@ describe('UserListComponent', () => {
       stubListSubject.next(resVal);
       testObs.unsubscribe();
     }));
-    it('someSelected$の変更が反転した状態でcanDelete$に反映されること(true->false)', fakeAsync((done: DoneFn) => {
+    it('selectedState$の変更がallの状態ではcantDelete$にfalseで反映されること', fakeAsync((done: DoneFn) => {
       const testObs = component.cantDelete$.subscribe(x => {
         expect(x).toBeFalse();
         flush();
       });
-      stubSelectedSubject.next(true);
+      stubSelectedSubject.next(CHECK_STATE_VALUE.all);
       /*
       同一のObservableな変数を続けてテストしたい場合がある。
-      JSの特性上、subscribeした状態は残り続けるので適切に後処理を行わないと下記のnextを実行した際に↑のテストが再実行され失敗することになる
+      内部で宣言しているstubを使っている影響なのか
+      subscribeした状態が残り続けるので適切に後処理を行わないと下記のnextを実行した際に↑のテストが再実行され失敗することになる
       そのため再度同一のテストが実行されないようにunsubscribeを行い同一のテストが実行されないように後処理を行っておく必要がある
       */
       testObs.unsubscribe();
     }));
-    it('someSelected$の変更が反転した状態でcanDelete$に反映されること(false->true)', fakeAsync((done: DoneFn) => {
+    it('selectedState$の変更がindeterminateの状態ではcantDelete$にfalseで反映されること', fakeAsync((done: DoneFn) => {
+      const testObs = component.cantDelete$.subscribe(x => {
+        expect(x).toBeFalse();
+        flush();
+      });
+      stubSelectedSubject.next(CHECK_STATE_VALUE.indeterminate);
+      testObs.unsubscribe();
+    }));
+    it('selectedState$の変更がnothingの状態ではcantDelete$にtrueで反映されること', fakeAsync((done: DoneFn) => {
       const testObs = component.cantDelete$.subscribe(x => {
         expect(x).toBeTrue();
         flush();
       });
-      stubSelectedSubject.next(false);
+      stubSelectedSubject.next(CHECK_STATE_VALUE.nothing);
       testObs.unsubscribe();
     }));
   });
@@ -199,6 +210,12 @@ describe('UserListComponent', () => {
       component.changeCheckedState('1');
       expect(serviceStub.changeChekedState).toHaveBeenCalled();
       expect(serviceStub.changeChekedState).toHaveBeenCalledWith('1');
+    });
+
+    it('ヘッダチェックボックス押下処理でList全選択ファンクションが呼び出されること', () => {
+      spyOn(serviceStub, 'allCheckStateChange');
+      component.allCheckStateChange();
+      expect(serviceStub.allCheckStateChange).toHaveBeenCalled();
     });
   });
 });

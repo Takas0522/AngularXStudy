@@ -22,4 +22,8 @@ export class UserListService {
   changeChekedState(id: string): void {
     this.query.changeChekedState(id);
   }
+
+  allCheckStateChange(): void {
+    this.query.allCheckStateChange();
+  }
 }

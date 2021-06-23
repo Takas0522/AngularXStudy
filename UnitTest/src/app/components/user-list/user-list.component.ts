@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { interval, Observable, pipe } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { CHECK_STATE, CHECK_STATE_VALUE } from 'src/app/constants/check-state';
 import { UserInterface } from 'src/app/models/user.interface';
 import { UserWithCheckedInterface } from './models/user-with-cheked.interface';
 import { UserListService } from './user-list.service';
@@ -24,6 +25,7 @@ export class UserListComponent implements OnInit {
   userList$!: Observable<UserWithCheckedInterface[]>;
   displayedColumns: string[] = ['checked', 'userId', 'userName', 'registerDate', 'userType', 'edit'];
   cantDelete$!: Observable<boolean>;
+  selectedState$!: Observable<CHECK_STATE>;
 
   constructor(
     private query: UserQueryService,
@@ -53,7 +55,8 @@ export class UserListComponent implements OnInit {
 
   private dataInit(): void {
     this.userList$ = this.query.userList$;
-    this.cantDelete$ = this.query.someSelected$.pipe(map(m => !m));
+    this.cantDelete$ = this.query.selectedState$.pipe(map(m => m === CHECK_STATE_VALUE.nothing));
+    this.selectedState$ = this.query.selectedState$;
     this.service.fetch();
   }
 
@@ -67,6 +70,10 @@ export class UserListComponent implements OnInit {
 
   changeCheckedState(id: string): void {
     this.service.changeChekedState(id);
+  }
+
+  allCheckStateChange(): void {
+    this.service.allCheckStateChange();
   }
 
 }

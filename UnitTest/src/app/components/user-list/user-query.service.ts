@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { CHECK_STATE, CHECK_STATE_VALUE } from 'src/app/constants/check-state';
 import { UserInterface } from 'src/app/models/user.interface';
 import { USER_TYPE_VALUE } from '../../models/user.interface';
 import { UserWithCheckedInterface } from './models/user-with-cheked.interface';
@@ -57,10 +58,32 @@ export class UserQueryService {
     this.filterUserList(this.filter);
   }
 
-  get someSelected$(): Observable<boolean> {
+  get selectedState$(): Observable<CHECK_STATE> {
     return this.userList$.pipe(
-      map(m => m.some(s => s.checked))
+      map(m => {
+        if (!m.some(s => s.checked)) {
+          return CHECK_STATE_VALUE.nothing;
+        }
+        if (!m.some(s => !s.checked)) {
+          return CHECK_STATE_VALUE.all;
+        }
+        return CHECK_STATE_VALUE.indeterminate;
+      })
     );
   }
 
+  allCheckStateChange(): void {
+    if (!this.baseData.some(s => s.checked)) {
+      this.baseData.forEach(f => f.checked = true);
+      this.filterUserList(this.filter);
+      return;
+    }
+    if (!this.baseData.some(s => !s.checked)) {
+      this.baseData.forEach(f => f.checked = false);
+      this.filterUserList(this.filter);
+      return;
+    }
+    this.baseData.forEach(f => f.checked = true);
+    this.filterUserList(this.filter);
+  }
 }

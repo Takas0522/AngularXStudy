@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { UserTypePipe } from 'src/app/pipes/user-type.pipe';
 
 import { UserEditComponent } from './user-edit.component';
 
@@ -8,7 +9,10 @@ describe('UserEditComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserEditComponent ]
+      declarations: [
+        UserEditComponent,
+        UserTypePipe
+      ]
     })
     .compileComponents();
   });
