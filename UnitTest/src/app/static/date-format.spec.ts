@@ -3,7 +3,7 @@
 import { dateFormat } from './date-format';
 
 // describeでネスト掘っていって…みたいな構成も可能
-describe('static test:dateFormat', () => {
+fdescribe('static test:dateFormat', () => {
   describe('年表示', () => {
       /*
       多少長くなってもどのようなテストを行い結果がどうなるのか明記したほうが良い。
@@ -19,7 +19,7 @@ describe('static test:dateFormat', () => {
           const targetDate = new Date(2021, 0, 1, 2, 3, 4, 5);
           // expect(期待値)
           const res = dateFormat(targetDate, 'yyyy');
-          expect('2021').toEqual(res);
+          expect(res).toEqual('2021');
       });
       describe('和暦', () => {
         it('ggg指定で和暦の元号が表示されること(令和)', () => {
@@ -40,7 +40,7 @@ describe('static test:dateFormat', () => {
         });
         it('1989/1/8以降は平成となること', () => {
             const targetDate = new Date(1989, 0, 8, 0, 0, 0, 0);
-            const res = dateFormat(targetDate, 'ggg')
+            const res = dateFormat(targetDate, 'ggg');
             expect('平成').toEqual(res);
         });
       });
@@ -56,6 +56,6 @@ describe('static test:dateFormat', () => {
       // 正常系だけでなく異常系のテストがあるとなお良い
       it ('フォーマットで使用される文字以外が指定された場合はそのまま出力されること', () => {
 
-      })
+      });
   });
 });
