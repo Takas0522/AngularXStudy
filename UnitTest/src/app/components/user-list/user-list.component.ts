@@ -49,7 +49,7 @@ export class UserListComponent implements OnInit {
         );
       })
     ).subscribe(x => {
-      this.query.filterUserList(x);
+      this.service.filterUserList(x);
     });
   }
 

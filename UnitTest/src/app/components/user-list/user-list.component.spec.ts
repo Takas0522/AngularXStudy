@@ -56,7 +56,6 @@ describe('UserListComponent', () => {
             // Observableなテストの簡略化のためGetterで返却するList$はテスト内で生成したBehaviorSubject変数を使用する
             get userList$(): Observable<UserInterface[]> { return stubListSubject.asObservable(); },
             get selectedState$(): Observable<CHECK_STATE> { return stubSelectedSubject.asObservable(); },
-            filterUserList(filterWord: string): void { },
           }
         },
         {
@@ -64,7 +63,8 @@ describe('UserListComponent', () => {
           useValue: {
             fetch(): void { },
             changeChekedState(id: string): void { },
-            allCheckStateChange(): void {}
+            allCheckStateChange(): void {},
+            filterUserList(filterWord: string): void { },
           }
         },
       ]
@@ -161,30 +161,30 @@ describe('UserListComponent', () => {
 
   describe('検索項目', () => {
     it('検索文字列入力後、QueryのfilterUserListが叩かれること', fakeAsync(() => {
-      spyOn(queryStub, 'filterUserList');
+      spyOn(serviceStub, 'filterUserList');
       // setTimeoutやdebouceTimeなどの非同期処理を行う場合はfakeAsyncを使用する
       component.formGroup.patchValue({ searchInput: 'testvalue' });
       fixture.detectChanges();
       // ComponentのdebouceTimeは200ms待機するのでここでも200ms待機
       tick(200);
       // このメソッド呼んだ？ってテスト
-      expect(queryStub.filterUserList).toHaveBeenCalled();
+      expect(serviceStub.filterUserList).toHaveBeenCalled();
       // このメソッドこの引数で呼んだ？ってテスト
-      expect(queryStub.filterUserList).toHaveBeenCalledWith({
+      expect(serviceStub.filterUserList).toHaveBeenCalledWith({
         isAdmin: true,
         isCommonUser: true,
         searchInput: 'testvalue'
       });
     }));
     it('検索文字列入力後、200ms未満であればfilterUserListが叩かれないこと', fakeAsync(() => {
-      spyOn(queryStub, 'filterUserList');
+      spyOn(serviceStub, 'filterUserList');
       // setTimeoutやdebouceTimeなどの非同期処理を行う場合はfakeAsyncを使用する
       component.formGroup.patchValue({ searchInput: 'testvalue' });
       fixture.detectChanges();
       // ComponentのdebouceTimeは200ms待機するのでここでも200ms待機
       tick(100);
       // このメソッド呼んだ？ってテスト
-      expect(queryStub.filterUserList).not.toHaveBeenCalled();
+      expect(serviceStub.filterUserList).not.toHaveBeenCalled();
       // 残りの100msを実行しタスクを空にする(tick指定時間数分実行しないとタスクに結果がオチてこない→flushしても溜まってないので意味がない)
       tick(100);
     }));
