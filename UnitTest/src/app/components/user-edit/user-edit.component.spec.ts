@@ -1,20 +1,37 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { of } from 'rxjs';
 import { UserTypePipe } from 'src/app/pipes/user-type.pipe';
 
 import { UserEditComponent } from './user-edit.component';
+import { UserEditService } from './user-edit.service';
 
 describe('UserEditComponent', () => {
   let component: UserEditComponent;
   let fixture: ComponentFixture<UserEditComponent>;
+  let activatedRouteStub: ActivatedRoute;
+  let userEditServiceStub: UserEditService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [
         UserEditComponent,
         UserTypePipe
+      ],
+      imports: [
+        { provide: ActivatedRoute, useValue: {
+          snapshot: {
+            paramMap: {}
+          }
+        }},
+        { provide: UserEditService, useValue: {
+          fetch(): void {}
+        }}
       ]
     })
     .compileComponents();
+    activatedRouteStub = TestBed.inject(ActivatedRoute);
+    userEditServiceStub = TestBed.inject(UserEditService);
   });
 
   beforeEach(() => {
@@ -28,7 +45,14 @@ describe('UserEditComponent', () => {
   });
 
   describe('ルーティング', () => {
-    it ('/userで遷移したときはデータ取得処理が実行されないこと', () => {});
+    it ('/userで遷移したときはデータ取得処理が実行されないこと', () => {
+      spyOn(userEditServiceStub, 'fetch');
+      spyOnProperty(activatedRouteStub.snapshot.paramMap, 'get').and.returnValue(() => {
+        convertToParamMap({});
+      });
+      component.ngOnInit();
+      expect(userEditServiceStub).not.toHaveBeenCalled();
+    });
     it ('/user/1で遷移したときはデータ取得処理が実行されること', () => {});
   });
 
