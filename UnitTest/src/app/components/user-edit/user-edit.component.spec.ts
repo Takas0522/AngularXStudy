@@ -1,6 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute, convertToParamMap } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
+import { routes } from 'src/app/app-routing.module';
 import { UserTypePipe } from 'src/app/pipes/user-type.pipe';
 
 import { UserEditComponent } from './user-edit.component';
@@ -19,14 +26,24 @@ describe('UserEditComponent', () => {
         UserTypePipe
       ],
       imports: [
+        RouterTestingModule.withRoutes(routes),
+        MatFormFieldModule,
+        MatSelectModule,
+        ReactiveFormsModule,
+        MatInputModule,
+        NoopAnimationsModule
+      ],
+      providers: [
         { provide: ActivatedRoute, useValue: {
           snapshot: {
-            paramMap: {}
+            paramMap: {
+              get(val: string): string { return ''; }
+            }
           }
         }},
         { provide: UserEditService, useValue: {
           fetch(): void {}
-        }}
+        }},
       ]
     })
     .compileComponents();
@@ -47,13 +64,16 @@ describe('UserEditComponent', () => {
   describe('ルーティング', () => {
     it ('/userで遷移したときはデータ取得処理が実行されないこと', () => {
       spyOn(userEditServiceStub, 'fetch');
-      spyOnProperty(activatedRouteStub.snapshot.paramMap, 'get').and.returnValue(() => {
-        convertToParamMap({});
-      });
+      spyOn(activatedRouteStub.snapshot.paramMap, 'get').and.returnValue('');
       component.ngOnInit();
-      expect(userEditServiceStub).not.toHaveBeenCalled();
+      expect(userEditServiceStub.fetch).not.toHaveBeenCalled();
     });
-    it ('/user/1で遷移したときはデータ取得処理が実行されること', () => {});
+    it ('/user/1で遷移したときはデータ取得処理が実行されること', () => {
+      spyOn(userEditServiceStub, 'fetch');
+      spyOn(activatedRouteStub.snapshot.paramMap, 'get').and.returnValue('1');
+      component.ngOnInit();
+      expect(userEditServiceStub.fetch).toHaveBeenCalledWith('1');
+    });
   });
 
   describe('初期値', () => {

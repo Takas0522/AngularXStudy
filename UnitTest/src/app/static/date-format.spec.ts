@@ -3,7 +3,7 @@
 import { dateFormat } from './date-format';
 
 // describeでネスト掘っていって…みたいな構成も可能
-fdescribe('static test:dateFormat', () => {
+describe('static test:dateFormat', () => {
   describe('年表示', () => {
       /*
       多少長くなってもどのようなテストを行い結果がどうなるのか明記したほうが良い。

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { USER_TYPE_VALUE } from 'src/app/models/user.interface';
+import { UserEditService } from './user-edit.service';
 
 @Component({
   selector: 'app-user-edit',
@@ -14,9 +16,20 @@ export class UserEditComponent implements OnInit {
     userName: new FormControl(''),
     userType: new FormControl(USER_TYPE_VALUE.commonUser)
   });
-  constructor() { }
+  constructor(
+    private acitivateRoute: ActivatedRoute,
+    private userEditService: UserEditService
+  ) { }
 
   ngOnInit(): void {
+    this.dataInit();
+  }
+
+  dataInit(): void {
+    const userId = this.acitivateRoute.snapshot.paramMap.get('user');
+    if (userId && userId !== '') {
+      this.userEditService.fetch(userId);
+    }
   }
 
 }
