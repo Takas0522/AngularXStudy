@@ -112,17 +112,6 @@ describe('UserListComponent', () => {
       ];
       const testObs = component.userList$.subscribe(x => {
         expect(x).toEqual(resVal);
-        // flushでマクロタスクキューを空にする(subscribeの処理を実行し空にするみたいなイメージ)
-        flush();
-        /*
-        似たような処理でtickとかdoneがある。
-        tickは指定時間の経過をシミュレートする。
-        doneは非同期処理の完了を通知する。なのでdone時にマクロタスクキューに情報が残っていると完了したけどキューに情報あるよってことでエラーになったりする
-          > Error: 1 timer(s) still in the queue.
-        たとえば、doneを使う場合👇のような書き方をすると初期＋最後のデータではなく最後の1データしかキューにたまらないのでエラーにならない
-        component.userList$.pipe(last()).subscribe(x => { expect(x).toEqual(resVal); done(); })
-        stubSubject.next(resVal);
-        */
       });
       stubListSubject.next(resVal);
       testObs.unsubscribe();
@@ -130,7 +119,6 @@ describe('UserListComponent', () => {
     it('selectedState$の変更がallの状態ではcantDelete$にfalseで反映されること', fakeAsync((done: DoneFn) => {
       const testObs = component.cantDelete$.subscribe(x => {
         expect(x).toBeFalse();
-        flush();
       });
       stubSelectedSubject.next(CHECK_STATE_VALUE.all);
       /*
@@ -144,7 +132,6 @@ describe('UserListComponent', () => {
     it('selectedState$の変更がindeterminateの状態ではcantDelete$にfalseで反映されること', fakeAsync((done: DoneFn) => {
       const testObs = component.cantDelete$.subscribe(x => {
         expect(x).toBeFalse();
-        flush();
       });
       stubSelectedSubject.next(CHECK_STATE_VALUE.indeterminate);
       testObs.unsubscribe();
@@ -152,7 +139,6 @@ describe('UserListComponent', () => {
     it('selectedState$の変更がnothingの状態ではcantDelete$にtrueで反映されること', fakeAsync((done: DoneFn) => {
       const testObs = component.cantDelete$.subscribe(x => {
         expect(x).toBeTrue();
-        flush();
       });
       stubSelectedSubject.next(CHECK_STATE_VALUE.nothing);
       testObs.unsubscribe();
@@ -165,7 +151,14 @@ describe('UserListComponent', () => {
       // setTimeoutやdebouceTimeなどの非同期処理を行う場合はfakeAsyncを使用する
       component.formGroup.patchValue({ searchInput: 'testvalue' });
       fixture.detectChanges();
-      // ComponentのdebouceTimeは200ms待機するのでここでも200ms待機
+      /*
+      tickは指定時間の経過をシミュレートする。
+      doneは非同期処理の完了を通知する。なのでdone時にマクロタスクキューに情報が残っていると完了したけどキューに情報あるよってことでエラーになったりする
+        > Error: 1 timer(s) still in the queue.
+      たとえば、doneを使う場合👇のような書き方をすると初期＋最後のデータではなく最後の1データしかキューにたまらないのでエラーにならない
+      component.userList$.pipe(last()).subscribe(x => { expect(x).toEqual(resVal); done(); })
+      stubSubject.next(resVal);
+      */
       tick(200);
       // このメソッド呼んだ？ってテスト
       expect(serviceStub.filterUserList).toHaveBeenCalled();

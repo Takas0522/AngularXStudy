@@ -1,5 +1,5 @@
 import { fakeAsync, flush, TestBed } from '@angular/core/testing';
-import { last } from 'rxjs/operators';
+import { last, skip } from 'rxjs/operators';
 import { CHECK_STATE_VALUE } from 'src/app/constants/check-state';
 import { UserInterface } from 'src/app/models/user.interface';
 import { UserWithCheckedInterface } from './models/user-with-cheked.interface';
@@ -25,10 +25,12 @@ describe('UserQueryService', () => {
         { userId: 'id2', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName2', userType: 0, checked: false },
         { userId: 'id3', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName3', userType: 1, checked: false },
       ];
-      queryService.update(baseData);
-      queryService.selectedState$.subscribe(x => {
+      // BehaviorSUbjectを使用しているので初回の通知は無視
+      const q = queryService.selectedState$.pipe(skip(1)).subscribe(x => {
         expect(x).toEqual(CHECK_STATE_VALUE.indeterminate);
       });
+      queryService.update(baseData);
+      q.unsubscribe();
       flush();
     }));
 
@@ -38,10 +40,11 @@ describe('UserQueryService', () => {
         { userId: 'id2', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName2', userType: 0, checked: false },
         { userId: 'id3', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName3', userType: 1, checked: false },
       ];
-      queryService.update(baseData);
-      queryService.selectedState$.subscribe(x => {
+      const q = queryService.selectedState$.pipe(skip(1)).subscribe(x => {
         expect(x).toEqual(CHECK_STATE_VALUE.nothing);
       });
+      queryService.update(baseData);
+      q.unsubscribe();
       flush();
     }));
 
@@ -51,10 +54,11 @@ describe('UserQueryService', () => {
         { userId: 'id2', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName2', userType: 0, checked: true },
         { userId: 'id3', registerDate: new Date(2021, 0, 1, 0, 0, 0, 0), userName: 'userName3', userType: 1, checked: true },
       ];
-      queryService.update(baseData);
-      queryService.selectedState$.subscribe(x => {
+      const q = queryService.selectedState$.pipe(skip(1)).subscribe(x => {
         expect(x).toEqual(CHECK_STATE_VALUE.all);
       });
+      queryService.update(baseData);
+      q.unsubscribe();
       flush();
     }));
   });
