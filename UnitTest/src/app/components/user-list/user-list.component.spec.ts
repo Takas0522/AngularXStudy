@@ -21,6 +21,7 @@ import { UserWithCheckedInterface } from './models/user-with-cheked.interface';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CHECK_STATE, CHECK_STATE_VALUE } from 'src/app/constants/check-state';
+import { asyncData } from 'src/app/tesiting/asyncData';
 
 describe('UserListComponent', () => {
   let component: UserListComponent;
@@ -106,7 +107,7 @@ describe('UserListComponent', () => {
   });
 
   describe('Query動作', () => {
-    it('Queryから値の変更が通知された際は、userListに変更が反映されること', fakeAsync((done: DoneFn) => {
+    it('Queryから値の変更が通知された際は、userListに変更が反映されること', () => {
       const resVal: UserWithCheckedInterface[] = [
         { checked: false, userId: '1', userName: 'TS', userType: 0, registerDate: new Date(2021, 1, 1, 0, 0, 0.0) }
       ];
@@ -115,8 +116,8 @@ describe('UserListComponent', () => {
       });
       stubListSubject.next(resVal);
       testObs.unsubscribe();
-    }));
-    it('selectedState$の変更がallの状態ではcantDelete$にfalseで反映されること', fakeAsync((done: DoneFn) => {
+    });
+    it('selectedState$の変更がallの状態ではcantDelete$にfalseで反映されること', () => {
       const testObs = component.cantDelete$.subscribe(x => {
         expect(x).toBeFalse();
       });
@@ -128,21 +129,21 @@ describe('UserListComponent', () => {
       そのため再度同一のテストが実行されないようにunsubscribeを行い同一のテストが実行されないように後処理を行っておく必要がある
       */
       testObs.unsubscribe();
-    }));
-    it('selectedState$の変更がindeterminateの状態ではcantDelete$にfalseで反映されること', fakeAsync((done: DoneFn) => {
+    });
+    it('selectedState$の変更がindeterminateの状態ではcantDelete$にfalseで反映されること', () => {
       const testObs = component.cantDelete$.subscribe(x => {
         expect(x).toBeFalse();
       });
       stubSelectedSubject.next(CHECK_STATE_VALUE.indeterminate);
       testObs.unsubscribe();
-    }));
-    it('selectedState$の変更がnothingの状態ではcantDelete$にtrueで反映されること', fakeAsync((done: DoneFn) => {
+    });
+    it('selectedState$の変更がnothingの状態ではcantDelete$にtrueで反映されること', () => {
       const testObs = component.cantDelete$.subscribe(x => {
         expect(x).toBeTrue();
       });
       stubSelectedSubject.next(CHECK_STATE_VALUE.nothing);
       testObs.unsubscribe();
-    }));
+    });
   });
 
   describe('検索項目', () => {

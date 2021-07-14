@@ -169,7 +169,7 @@ describe('UserListService', () => {
       expect(queryStub.update).toHaveBeenCalledWith(expData);
     });
 
-    it('管理者チェックボックスのみOnで管理者のみ抽出されUpdate処理が実行されること', fakeAsync(() => {
+    it('管理者チェックボックスのみOnで管理者のみ抽出されUpdate処理が実行されること', () => {
       init();
       service.filterUserList({ searchInput: '', isAdmin: true, isCommonUser: false });
       expect(queryStub.update).toHaveBeenCalled();
@@ -184,7 +184,7 @@ describe('UserListService', () => {
         };
       }).filter(x => x.userType === USER_TYPE_VALUE.Admin);
       expect(queryStub.update).toHaveBeenCalledWith(expData);
-    }));
+    });
 
     it('検索文字列が空の場合は全件抽出されること', () => {});
     it('一派ユーザーのみチェックボックスOnで一般ユーザーのみ抽出されること', () => {});
