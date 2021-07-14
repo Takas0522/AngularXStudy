@@ -1,0 +1,10 @@
+{
+  "/base-api": {
+    "target": "https://localhost:5001",
+    "secure": false,
+    "pathRewrite": {
+    "^/base-api": ""
+    },
+    "logLevel": "debug"
+  }
+}
