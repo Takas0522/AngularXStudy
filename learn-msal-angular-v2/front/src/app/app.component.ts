@@ -21,11 +21,6 @@ export class AppComponent implements OnInit {
   private async authSettingInit() {
     await this.authService.instance.handleRedirectPromise();
     // ↑がないとエラー吐く
-    this.authService.handleRedirectObservable().subscribe(x => {
-      if (x) {
-        console.log({handleRedirectObservable: x})
-      }
-    });
     const ac = this.authService.instance.getAllAccounts();
     if (ac && ac.length > 0) {
       return;

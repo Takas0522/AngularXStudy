@@ -1,0 +1,13 @@
+<div>
+    <button (click)="signin()">SIGN IN</button>
+</div>
+<div>
+    <button (click)="getCalendarList()">GET CALENDAR LIST</button>
+</div>
+<div>
+    <div *ngFor="let calendar of calendarList$ | async">
+        <input type="radio" name="calendar" value="{{calendar.id}}" [formControl]="radioControl"/>
+        <label for="{{calendar.id}}">{{calendar.summary}}</label>
+    </div>
+</div>
+<button (click)="registerEvents()">Event insert</button>
