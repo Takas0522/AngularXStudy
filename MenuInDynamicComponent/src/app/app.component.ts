@@ -15,13 +15,9 @@ export class AppComponent implements OnInit {
   @ViewChild('menuTwoContent', {static: true})
   menuTwoComppnent!: MenuContentComponent<MenuTwoComponent>;
 
-  contentOne = new ContentComponent(MenuOneComponent);
+  contentOne: Type<MenuOneComponent> = MenuOneComponent;
 
   ngOnInit() {
     this.menuTwoComppnent.contentComponent = MenuTwoComponent;
   }
-}
-
-class  ContentComponent {
-  constructor(public component: Type<any>) {}
 }
