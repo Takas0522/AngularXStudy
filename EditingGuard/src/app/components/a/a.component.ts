@@ -15,9 +15,12 @@ export class AComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  @HostListener('window:beforeunload')
-  canDeactivate(): Observable<boolean> | boolean {
+  @HostListener('window:beforeunload', ['$event'])
+  windowBeforeunload(event: BeforeUnloadEvent) {
     console.log('window:beforeunload')
+    return this.canDeactivate();
+  }
+  canDeactivate(): Observable<boolean> | boolean {
     return !this.isEditing;
   }
 }
