@@ -1,4 +1,4 @@
-<div class="contentts" [ngClass]="{'hidden-ctrl': !sanitizeImageSrc}">
+<div class="contentts" #parents [ngClass]="{'hidden-ctrl': !sanitizeImageSrc}">
   <div>
     <button (click)="calcScale(true)">Zoom</button>
     <button (click)="calcScale(false)">Shrink</button>

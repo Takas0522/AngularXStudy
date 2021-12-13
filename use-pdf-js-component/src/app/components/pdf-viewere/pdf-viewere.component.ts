@@ -24,6 +24,9 @@ export class PdfViewereComponent implements OnInit {
   @ViewChild('pdfCanvas', { static: true })
   private pdfCanvas!: ElementRef;
 
+  @ViewChild('parents', { static: true })
+  private parent!: ElementRef;
+
   private scale = 1;
 
   constructor(
@@ -48,9 +51,10 @@ export class PdfViewereComponent implements OnInit {
     return page.getViewport({scale: this.scale});
   }
 
-  fixedSpace(page: PDFPageProxy, canvas: HTMLCanvasElement) {
+  fixedSpace(page: PDFPageProxy) {
     const pageViewPort = page.getViewport({scale: 1.0});
-    return page.getViewport({scale: canvas.width / pageViewPort.width});
+    const width = this.parent.nativeElement.offsetWidth;
+    return page.getViewport({scale: width / pageViewPort.width});
   }
 
   private async loadPdf(isFixed: boolean) {
@@ -60,7 +64,7 @@ export class PdfViewereComponent implements OnInit {
     const pdf = await loadTask.promise;
     const canvas = (this.pdfCanvas.nativeElement as HTMLCanvasElement);
     const page = await pdf.getPage(1);
-    const viewport = isFixed ? this.fixedSpace(page, canvas) : this.scaleZoom(page);
+    const viewport = isFixed ? this.fixedSpace(page) : this.scaleZoom(page);
     const context = canvas.getContext('2d');
     if (context == null) return;
     canvas.height = viewport.height;
