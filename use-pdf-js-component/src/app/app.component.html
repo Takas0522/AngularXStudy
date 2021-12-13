@@ -1,0 +1,4 @@
+<input #inputFile type="file" placeholder="PDF Fie" (change)="changeInputFile($event.target)" />
+<div class="pdf-view">
+    <app-pdf-viewere [imageSrc]="imageSrcValue"></app-pdf-viewere>
+</div>
