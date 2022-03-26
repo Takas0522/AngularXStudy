@@ -1,0 +1,11 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <div>
+        <input formControlName="title" placeholder="Title"/>
+    </div>
+    <div>
+        <input formControlName="author"  placeholder="Author"/>
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>
