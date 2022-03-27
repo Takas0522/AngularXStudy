@@ -11,24 +11,6 @@ stages:
     pool:
       vmImage: windows-latest
     steps:
-    - task: npm@1
-      displayName: npm ci
-      inputs:
-        command: custom
-        customCommand: 'ci'
-        workingDir: LearnCypressAndCucumber
-    - task: npm@1
-      displayName: npm start
-      inputs:
-        command: custom
-        customCommand: 'run start'
-        workingDir: LearnCypressAndCucumber
-    - task: npm@1
-      displayName: npm cypress
-      inputs:
-        command: custom
-        customCommand: 'run cypress:run'
-        workingDir: LearnCypressAndCucumber
     - task: PublishTestResults@2
       inputs:
         testResultsFormat: 'JUnit'
