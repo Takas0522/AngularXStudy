@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataInterface, DataService } from 'src/app/services/data.service';
 
@@ -10,20 +10,42 @@ import { DataInterface, DataService } from 'src/app/services/data.service';
 })
 export class EditComponent implements OnInit {
 
+  private titleControl: AbstractControl | null = null;
+  private authorControl: AbstractControl | null = null;
+
+  get hasTitleError() {
+    if (this.titleControl == null) {
+      return true;
+    }
+    return this.titleControl.invalid;
+  }
+
+  get hasAuthorError() {
+    if (this.authorControl == null) {
+      return true;
+    }
+    return this.authorControl.invalid;
+  }
+
   constructor(
     private dataService: DataService,
     private router: Router
   ) { }
 
   formGroup = new FormGroup({
-    title: new FormControl(''),
-    author: new FormControl('')
+    title: new FormControl('', Validators.required),
+    author: new FormControl('', Validators.required)
   })
 
   ngOnInit(): void {
+    this.titleControl = this.formGroup.get('title');
+    this.authorControl = this.formGroup.get('author');
   }
 
   onSubmit(): void {
+    if (this.formGroup.invalid) {
+      return;
+    }
     const formValue = this.formGroup.value;
     const addData: DataInterface = {
       title: formValue.title,

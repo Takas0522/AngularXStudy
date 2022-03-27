@@ -1,0 +1,23 @@
+trigger:
+  branches:
+    include:
+    - master
+
+stages:
+- stage: build
+  jobs:
+  - job: build_job
+    displayName: Build Angular
+    pool:
+      vmImage: windows-latest
+    steps:
+    - task: npm@1
+      displayName: npm ci
+      inputs:
+        command: custom
+        customCommand: 'ci'
+    - task: npm@1
+      displayName: npm cypress
+      inputs:
+        command: custom
+        customCommand: 'cypress:run'

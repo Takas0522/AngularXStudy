@@ -7,7 +7,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:report": "cypress run --reporter cypress-multi-reporters --reporter-options configFile=reporter-config.json",
+    "cypress:run": "cypress run"
   },
   "private": true,
   "dependencies": {
@@ -31,12 +33,20 @@
     "@types/node": "^12.11.1",
     "cypress": "^9.5.2",
     "cypress-cucumber-preprocessor": "^4.3.1",
+    "cypress-multi-reporters": "^1.5.0",
+    "cypress-mochawesome-reporter": "^3.0.0",
+    "junit-report-merger": "^3.0.5",
+    "mocha": "^9.2.2",
     "jasmine-core": "~4.0.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "mocha-junit-reporter": "^2.0.2",
     "typescript": "~4.5.2"
+  },
+  "cypress-cucumber-preprocessor": {
+    "nonGlobalStepDefinitions": true
   }
 }
