@@ -16,18 +16,21 @@ stages:
       inputs:
         command: custom
         customCommand: 'ci'
+        workingDir: LearnCypressAndCucumber
     - task: npm@1
       displayName: npm start
       inputs:
         command: custom
         customCommand: 'start'
+        workingDir: LearnCypressAndCucumber
     - task: npm@1
       displayName: npm cypress
       inputs:
         command: custom
         customCommand: 'cypress:run'
+        workingDir: LearnCypressAndCucumber
     - task: PublishTestResults@2
       inputs:
         testResultsFormat: 'JUnit'
-        testResultsFiles: 'cypress/reports/junitreport.xml'
+        testResultsFiles: 'LearnCypressAndCucumber/cypress/reports/junitreport.xml'
         mergeTestResults: true
