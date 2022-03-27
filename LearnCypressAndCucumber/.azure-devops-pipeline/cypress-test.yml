@@ -21,3 +21,8 @@ stages:
       inputs:
         command: custom
         customCommand: 'cypress:run'
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: 'cypress/reports/junitreport.xml'
+        mergeTestResults: true
