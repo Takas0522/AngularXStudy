@@ -21,13 +21,13 @@ stages:
       displayName: npm start
       inputs:
         command: custom
-        customCommand: 'start'
+        customCommand: 'run start'
         workingDir: LearnCypressAndCucumber
     - task: npm@1
       displayName: npm cypress
       inputs:
         command: custom
-        customCommand: 'cypress:run'
+        customCommand: 'run cypress:run'
         workingDir: LearnCypressAndCucumber
     - task: PublishTestResults@2
       inputs:
