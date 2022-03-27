@@ -17,6 +17,11 @@ stages:
         command: custom
         customCommand: 'ci'
     - task: npm@1
+      displayName: npm start
+      inputs:
+        command: custom
+        customCommand: 'start'
+    - task: npm@1
       displayName: npm cypress
       inputs:
         command: custom
