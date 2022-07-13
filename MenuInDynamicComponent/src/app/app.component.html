@@ -1,0 +1,13 @@
+<div>
+  <button [matMenuTriggerFor]="menuOne">ContentOne</button>
+</div>
+<mat-menu #menuOne>
+  <app-menu-content [contentComponent]="contentOne"></app-menu-content>
+</mat-menu>
+
+<div>
+  <button [matMenuTriggerFor]="menuTwo">ContentTwo</button>
+</div>
+<mat-menu #menuTwo>
+  <app-menu-content #menuTwoContent></app-menu-content>
+</mat-menu>

@@ -1,0 +1,18 @@
+trigger:
+  branches:
+    include:
+    - master
+
+stages:
+- stage: build
+  jobs:
+  - job: build_job
+    displayName: Build Angular
+    pool:
+      vmImage: windows-latest
+    steps:
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: 'LearnCypressAndCucumber/cypress/reports/junitreport.xml'
+        mergeTestResults: true

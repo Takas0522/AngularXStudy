@@ -1,0 +1,10 @@
+<div class="contentts" #parents [ngClass]="{'hidden-ctrl': !sanitizeImageSrc}">
+  <div>
+    <button (click)="calcScale(true)">Zoom</button>
+    <button (click)="calcScale(false)">Shrink</button>
+    <button (click)="fix()">Fix</button>
+  </div>
+  <div>
+    <canvas #pdfCanvas></canvas>
+  </div>
+</div>

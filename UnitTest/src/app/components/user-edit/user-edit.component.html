@@ -1,0 +1,28 @@
+<div class="contents">
+  <form [formGroup]="formGroup">
+    <div>
+      <mat-form-field>
+        <input matInput formControlName="userId"
+          placeholder="ユーザーID"/>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <input matInput formControlName="userName"
+          placeholder="ユーザー名"/>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-select formControlName="userType"
+          placeholder="ユーザー種別">
+          <mat-option [value]=0>{{0|userType}}</mat-option>
+          <mat-option [value]=1>{{1|userType}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <button mat-flat-button color="primary">
+      登録
+    </button>
+  </form>
+</div>

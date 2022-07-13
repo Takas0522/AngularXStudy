@@ -1,0 +1,13 @@
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+    <div>
+        <input formControlName="title" placeholder="Title"/>
+        <span name="title-error" *ngIf="hasTitleError">Titleは必須項目です</span>
+    </div>
+    <div>
+        <input formControlName="author"  placeholder="Author"/>
+        <span name="author-error" *ngIf="hasAuthorError">Authorは必須項目です</span>
+    </div>
+    <div>
+        <button type="submit">Submit</button>
+    </div>
+</form>

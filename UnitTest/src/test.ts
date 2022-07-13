@@ -6,6 +6,7 @@ import {
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
+import { ngMocks } from 'ng-mocks';
 
 declare const require: {
   context(path: string, deep?: boolean, filter?: RegExp): {

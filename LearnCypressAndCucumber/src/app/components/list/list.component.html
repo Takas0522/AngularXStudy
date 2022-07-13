@@ -1,0 +1,14 @@
+<a [routerLink]="'edit'">Add New Data</a>
+<div *ngFor="let data of data$ | async">
+  <div class="line">
+    <div class="title">
+        {{data.title}}
+    </div>
+    <div class="author">
+        {{data.author}}
+    </div>
+    <div class="edit-date">
+        {{data.editDate }}
+    </div>
+  </div>
+</div>
