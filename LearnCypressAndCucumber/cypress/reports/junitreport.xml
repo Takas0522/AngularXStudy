@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <testsuites failures="0" errors="0" tests="2">
-  <testsuite name="Root Suite" timestamp="2022-03-27T07:06:42" tests="0" file="cypress/integration/cucumber/input-test.feature" time="0.0000" failures="0"/>
-  <testsuite name="ユーザーは入力画面からデータの入力を行うことができる" timestamp="2022-03-27T07:06:42" tests="2" time="3.5750" failures="0">
-    <testcase name="ユーザーは入力画面からデータの入力を行うことができる 普通にデータ入力した場合登録後Listページに遷移しデータが追加される" time="1.0820" classname="普通にデータ入力した場合登録後Listページに遷移しデータが追加される"/>
-    <testcase name="ユーザーは入力画面からデータの入力を行うことができる エラーが発生するようなデータを入力した場合エラーとなりページ遷移されない" time="0.3990" classname="エラーが発生するようなデータを入力した場合エラーとなりページ遷移されない"/>
+  <testsuite name="Root Suite" timestamp="2022-03-29T21:09:29" tests="0" file="cypress/integration/cucumber/input-test.feature" time="0.0000" failures="0"/>
+  <testsuite name="ユーザーは入力画面からデータの入力を行うことができる" timestamp="2022-03-29T21:09:29" tests="2" time="3.4750" failures="0">
+    <testcase name="ユーザーは入力画面からデータの入力を行うことができる 普通にデータ入力した場合登録後Listページに遷移しデータが追加される" time="1.0470" classname="普通にデータ入力した場合登録後Listページに遷移しデータが追加される"/>
+    <testcase name="ユーザーは入力画面からデータの入力を行うことができる エラーが発生するようなデータを入力した場合エラーとなりページ遷移されない" time="0.4030" classname="エラーが発生するようなデータを入力した場合エラーとなりページ遷移されない"/>
   </testsuite>
 </testsuites>

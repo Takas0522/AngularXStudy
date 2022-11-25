@@ -1,0 +1,15 @@
+<form [formGroup]="formGroup">
+  <div>
+    <input formControlName="userName" />
+    {{hasUserNameError()}}
+  </div>
+  <div>
+    <input formControlName="address" />
+  </div>
+  <div>
+    <input formControlName="tel" />
+  </div>
+</form>
+
+<button (click)="removeValidator()">REMOVE</button>
+<button (click)="reuseValidator()">Reuse</button>
