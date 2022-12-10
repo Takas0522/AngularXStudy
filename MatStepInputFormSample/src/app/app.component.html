@@ -1,0 +1,15 @@
+<button (click)="fetchData()">GET DATA</button>
+<form [formGroup]="formGroup">
+  <mat-stepper #stepper>
+    <mat-step>
+      <ng-template matStepLabel>個人情報</ng-template>
+      <app-personal-form formControlName="personalInfo"></app-personal-form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>送付情報</ng-template>
+      <app-delivery-form formControlName="deliveryInfo"></app-delivery-form>
+    </mat-step>
+  </mat-stepper>
+  <button type="submit">SUBMIT</button>
+</form>
+{{hasError}}
