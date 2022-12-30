@@ -1,0 +1,15 @@
+{
+  "name": "@devtakasmono/utility",
+  "scripts": {
+    "build": "cd ../../ && ng build LibraryD",
+    "build:libd": "cd ../../ && ng build LibraryD"
+  },
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^15.0.0",
+    "@angular/core": "^15.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "library-a",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "cd ../../ && ng build LibraryA",
+    "build:liba": "cd ../../ && ng build LibraryA"
+  },
+  "peerDependencies": {
+    "@angular/common": "^15.0.0",
+    "@angular/core": "^15.0.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "@devtakasmono/calc-component": "*",
+    "@devtakasmono/input-component": "*"
+  }
+}
