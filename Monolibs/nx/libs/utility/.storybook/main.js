@@ -1,7 +1,11 @@
 module.exports = {
   core: { builder: 'webpack5' },
-  stories: ['../**/*.stories.mdx', '../**/*.stories.@(js|jsx|ts|tsx)'],
-  addons: ['@storybook/addon-essentials'],
+  stories: ['../../**/*.stories.mdx', '../../**/*.stories.@(js|jsx|ts|tsx)'],
+  addons: [
+    "@storybook/addon-links",
+    "@storybook/addon-essentials",
+    "@storybook/addon-interactions"
+  ],
 };
 
 // To customize your webpack configuration you can use the webpackFinal field.

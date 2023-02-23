@@ -2,13 +2,11 @@ import { moduleMetadata, Story, Meta } from '@storybook/angular';
 import { MyFirstControlComponent } from './my-first-control.component';
 
 export default {
+  /**
+   * あっっれれれえｒ
+   */
   title: 'MyFirstControlComponent',
   component: MyFirstControlComponent,
-  decorators: [
-    moduleMetadata({
-      imports: [],
-    }),
-  ],
 } as Meta<MyFirstControlComponent>;
 
 const Template: Story<MyFirstControlComponent> = (args: MyFirstControlComponent) => ({
