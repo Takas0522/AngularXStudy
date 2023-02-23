@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "outDir": "../../dist/out-tsc",
+    "declaration": true,
+    "declarationMap": true,
+    "inlineSources": true,
+    "types": [],
+    "allowSyntheticDefaultImports": true
+  },
+  "exclude": ["**/*.spec.ts"],
+  "include": ["**/*.ts"],
+  "references": [
+    {
+      "path": "./.storybook/tsconfig.json"
+    }
+  ],
+}
