@@ -8,6 +8,8 @@
     "watch": "nx build --watch --configuration development",
     "test": "nx test",
     "build:ci": "nx affected:build --base=master",
+    "test:ci": "nx affected:test --base=master --browsers=ChromeHeadless --watch=false",
+    "lint:ci": "nx affected:lint --base=master",
     "story": "nx storybook utility"
   },
   "private": true,
