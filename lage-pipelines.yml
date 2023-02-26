@@ -49,3 +49,19 @@ stages:
         customCommand: 'run test:m'
       env:
         BACKFILL_CACHE_PROVIDER_OPTIONS: $(BACKFILL_CACHE_PROVIDER_OPTIONS)
+
+    - task: Npm@1
+      inputs:
+        command: 'custom'
+        workingDir: '$(workingDir)'
+        customCommand: 'run build:m'
+      env:
+        BACKFILL_CACHE_PROVIDER_OPTIONS: $(BACKFILL_CACHE_PROVIDER_OPTIONS)
+
+    - task: Npm@1
+      inputs:
+        command: 'custom'
+        workingDir: '$(workingDir)'
+        customCommand: 'run publish'
+      env:
+        BACKFILL_CACHE_PROVIDER_OPTIONS: $(BACKFILL_CACHE_PROVIDER_OPTIONS)
