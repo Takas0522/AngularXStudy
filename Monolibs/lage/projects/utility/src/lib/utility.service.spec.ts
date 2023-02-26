@@ -13,8 +13,4 @@ describe('UtilityService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
-
-  it('should be failed', () => {
-    expect(service).toBeFalsy();
-  });
 });
