@@ -1,0 +1,9 @@
+
+> @devtakas/utility@0.0.1 lint
+> cd ../../../../ && ng lint utility
+
+
+Linting "utility"...
+
+All files pass linting.
+

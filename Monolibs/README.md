@@ -38,6 +38,8 @@ flowchart TD
 ## Turborepo
 
 * 超楽だけどへいしゃでは使いづらいな！
-  * Azureべったり
+  * Azureべったりって構リモートキャッシュしづらい…
 
 ## Lege
+
+* MSのOSS。構成ファイルの記述内容とかTurborepoも結構影響受けているみたい。

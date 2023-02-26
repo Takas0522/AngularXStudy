@@ -1,6 +1,10 @@
 {
-  "name": "utility",
+  "name": "@devtakas/utility",
   "version": "0.0.1",
+  "scripts": {
+    "lint": "cd ../../../../ && ng lint utility",
+    "test": "cd ../../../../ && ng test utility --browsers=ChromeHeadless --watch=false"
+  },
   "peerDependencies": {
     "@angular/common": "^15.2.0",
     "@angular/core": "^15.2.0"
