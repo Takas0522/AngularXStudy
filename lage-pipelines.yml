@@ -1,0 +1,36 @@
+trigger:
+  branches:
+    include: ["master"]
+  paths:
+    include: ["Monolibs/lage/**"]
+
+variables:
+  workingDir: 'Monolibs/lage'
+
+stages:
+- stage: pre
+  jobs:
+  - job: preparation
+    displayName: Preparation Job
+    pool:
+      vmImage: 'Ubuntu 16.04'
+
+    steps:
+    - task: Cache@2
+      inputs:
+        key: 'npm | "$(Agent.OS)" | package-lock.json'
+        restoreKeys: |
+          npm | "$(Agent.OS)"
+        path: $(npm_config_cache)
+      displayName: Cache npm
+
+    - task: Npm@1
+      inputs:
+        command: 'ci'
+        workingDir: '$(workingDir)'
+
+    - task: Npm@1
+      inputs:
+        command: 'custom'
+        workingDir: '$(workingDir)'
+        customCommand: 'run lint:m'
