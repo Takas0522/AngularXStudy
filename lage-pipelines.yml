@@ -13,7 +13,7 @@ stages:
   - job: preparation
     displayName: Preparation Job
     pool:
-      vmImage: 'Ubuntu 16.04'
+      vmImage: 'ubuntu-latest'
 
     steps:
     - task: Cache@2
