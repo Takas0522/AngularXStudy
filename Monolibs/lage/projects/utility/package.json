@@ -2,7 +2,9 @@
   "name": "utility",
   "version": "0.0.1",
   "scripts": {
-    "lint": "cd ../../ && ng lint utility"
+    "lint": "cd ../../ && ng lint utility",
+    "build": "cd ../../ && ng build utility",
+    "test": "cd ../../ && ng test utility --watch=false --browsers=ChromeHeadless"
   },
   "peerDependencies": {
     "@angular/common": "^15.1.0",

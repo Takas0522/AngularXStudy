@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "lint:m": "lage lint"
+    "lint:m": "lage lint",
+    "test:m": "lage test"
   },
   "private": true,
   "dependencies": {
