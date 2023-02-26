@@ -9,7 +9,10 @@
     "test": "ng test",
     "lint": "ng lint",
     "lint:m": "lage lint",
-    "test:m": "lage test"
+    "test:m": "lage test",
+    "build:m": "lage build",
+    "change": "beachball change",
+    "publish": "beachball publish"
   },
   "private": true,
   "dependencies": {
@@ -37,6 +40,7 @@
     "@types/jasmine": "~4.3.0",
     "@typescript-eslint/eslint-plugin": "5.48.2",
     "@typescript-eslint/parser": "5.48.2",
+    "beachball": "^2.31.11",
     "dotenv": "^16.0.3",
     "eslint": "^8.33.0",
     "jasmine-core": "~4.5.0",
