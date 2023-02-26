@@ -7,6 +7,7 @@ trigger:
 variables:
   workingDir: 'Monolibs/lage'
   npm_config_cache: $(Pipeline.Workspace)/.npm
+  BACKFILL_CACHE_PROVIDER: $(BACKFILL_CACHE_PROVIDER)
 
 stages:
 - stage: pre
@@ -37,4 +38,11 @@ stages:
         customCommand: 'run lint:m'
       env:
         BACKFILL_CACHE_PROVIDER_OPTIONS: $(BACKFILL_CACHE_PROVIDER_OPTIONS)
-        
+
+    - task: Npm@1
+      inputs:
+        command: 'custom'
+        workingDir: '$(workingDir)'
+        customCommand: 'run test:m'
+      env:
+        BACKFILL_CACHE_PROVIDER_OPTIONS: $(BACKFILL_CACHE_PROVIDER_OPTIONS)
