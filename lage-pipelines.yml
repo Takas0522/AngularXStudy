@@ -35,3 +35,6 @@ stages:
         command: 'custom'
         workingDir: '$(workingDir)'
         customCommand: 'run lint:m'
+      env:
+        BACKFILL_CACHE_PROVIDER_OPTIONS: $(BACKFILL_CACHE_PROVIDER_OPTIONS)
+        
