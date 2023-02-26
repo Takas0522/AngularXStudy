@@ -7,6 +7,7 @@ trigger:
 variables:
   workingDir: 'Monolibs/lage'
   npm_config_cache: $(Pipeline.Workspace)/.npm
+  BACKFILL_CACHE_PROVIDER: $(BACKFILL_CACHE_PROVIDER)
 
 stages:
 - stage: pre
