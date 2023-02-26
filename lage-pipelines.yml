@@ -6,6 +6,7 @@ trigger:
 
 variables:
   workingDir: 'Monolibs/lage'
+  npm_config_cache: $(Pipeline.Workspace)/.npm
 
 stages:
 - stage: pre
@@ -18,7 +19,7 @@ stages:
     steps:
     - task: Cache@2
       inputs:
-        key: 'npm | "$(Agent.OS)" | package-lock.json'
+        key: 'npm | "$(Agent.OS)" | Monolibs/lage/package-lock.json'
         restoreKeys: |
           npm | "$(Agent.OS)"
         path: $(npm_config_cache)
