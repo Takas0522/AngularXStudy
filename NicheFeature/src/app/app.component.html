@@ -1,0 +1,3 @@
+<div><app-zip-code></app-zip-code></div>
+<div><app-zip-code #zipCodeCtrl [(ngModel)]="zipCode" [disabled]="disb"></app-zip-code> <button (click)="toggleDisableState()">Disbale/Enable</button></div>
+<div><app-zip-code [formControl]="formCtrl"></app-zip-code> <button (click)="toggleDisableStateFormControl()">Disbale/Enable</button></div>
