@@ -7,7 +7,7 @@ import { SampleService } from 'src/app/services/sample.service';
   templateUrl: './zip-code.component.html',
   styleUrls: ['./zip-code.component.scss'],
   // providers: [
-  //   // ngModelでやりとりをしたいときに利用
+  //  サンプルソースとかでよく見るけどprovide書くのめんどいしConstructorでngControlつかって色々やるほうが好き
   //   {
   //     provide: NG_VALUE_ACCESSOR, // ControlValueAccesorで定義されたComponentに紐づくSingletonサービスを提供する https://angular.jp/api/forms/ControlValueAccessor
   //     useExisting: forwardRef(() => ZipCodeComponent),
