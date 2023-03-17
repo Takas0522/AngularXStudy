@@ -1,0 +1,5 @@
+<input [formControl]="inputForm" placeholder="入力せよ" />
+{{inputForm.invalid}}
+<ng-container *ngIf="inputForm.invalid">
+  <div>{{errorMessage}}</div>
+</ng-container>
