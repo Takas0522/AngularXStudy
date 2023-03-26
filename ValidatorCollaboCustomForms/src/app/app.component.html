@@ -1,4 +1,10 @@
+<!--
+HTMLから色々指定する方法とReactiveFormsを最大限活用する方法
+-->
 <app-my-custom-control
-  ngModel
+  [formControl]="inputForm"
   required
-  appMyNameError="Bob"/>
+  label="取引先"
+  maxlength="10"
+  exists-data="Supplier"
+  (ready)="controlIsReady()"/>

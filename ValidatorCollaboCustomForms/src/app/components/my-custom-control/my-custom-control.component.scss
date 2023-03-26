@@ -1,0 +1,20 @@
+.contents {
+  display: flex;
+  width: 100%;
+}
+.label {
+  width: 100px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.input-field {
+  width: 200px;
+  input {
+    width: calc(100% - 20px);
+  }
+}
+.output-field {
+  width: calc(100% - 300px);
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
